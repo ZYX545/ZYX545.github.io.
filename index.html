@@ -1,0 +1,2332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一台戏与一座城 · 黄梅戏与安庆共生密码</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --red: #C62828; --red-dark: #8B0000; --gold: #D4A017; --gold-light: #F5DEB3;
+    --teal: #2E8B8B; --cream: #FFF8E7; --ink: #2C1810; --ink-light: #5C3A2E;
+    --paper: #FDF6E3; --stage-brown: #8B4513;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: "Noto Sans SC", sans-serif; background: var(--paper); color: var(--ink); overflow-x: hidden; }
+
+
+
+/* AUDIO */
+.audio-widget {
+    position: fixed; top: 20px; right: 20px; z-index: 9999;
+    background: rgba(255,248,231,0.95); border: 2px solid var(--gold); border-radius: 50px;
+    padding: 8px 20px; display: flex; align-items: center; gap: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15); backdrop-filter: blur(10px);
+    cursor: pointer; transition: all 0.3s;
+}
+.audio-widget:hover { transform: scale(1.05); }
+.audio-widget .icon { width: 32px; height: 32px; background: var(--red); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; }
+.audio-widget .label { font-size: 13px; color: var(--ink); font-weight: 500; }
+.audio-widget .wave { display: flex; gap: 2px; align-items: center; height: 20px; }
+.audio-widget .wave span { width: 3px; background: var(--gold); border-radius: 2px;
+    animation: wave 1s ease-in-out infinite; }
+.audio-widget .wave span:nth-child(1) { height: 8px; animation-delay: 0s; }
+.audio-widget .wave span:nth-child(2) { height: 14px; animation-delay: 0.1s; }
+.audio-widget .wave span:nth-child(3) { height: 10px; animation-delay: 0.2s; }
+.audio-widget .wave span:nth-child(4) { height: 16px; animation-delay: 0.3s; }
+.audio-widget .wave span:nth-child(5) { height: 6px; animation-delay: 0.4s; }
+@keyframes wave { 0%,100%{transform:scaleY(0.5)} 50%{transform:scaleY(1)} }
+
+/* HERO */
+.hero { min-height: 100vh; position: relative; display: flex; align-items: center; justify-content: center;
+    overflow: hidden; background-image:url("images/chart01.png");background-size: cover;background-attachment: fixed;}
+.hero-bg-pattern { position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 20% 80%, rgba(212,160,23,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 50%); opacity: 0.6; }
+.drum-rings { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+.drum-rings .ring { position: absolute; border: 1px solid rgba(212,160,23,0.15); border-radius: 50%;
+    animation: drumPulse 4s ease-in-out infinite; }
+.drum-rings .ring:nth-child(1){width:300px;height:300px;animation-delay:0s}
+.drum-rings .ring:nth-child(2){width:500px;height:500px;animation-delay:0.5s}
+.drum-rings .ring:nth-child(3){width:700px;height:700px;animation-delay:1s}
+.drum-rings .ring:nth-child(4){width:900px;height:900px;animation-delay:1.5s}
+@keyframes drumPulse { 0%,100%{transform:scale(1);opacity:0.3} 50%{transform:scale(1.05);opacity:0.6} }
+.hero-content { position: relative; z-index: 2; text-align: center; max-width: 900px; padding: 40px; }
+.hero .eyebrow { font-size: 18px; letter-spacing: 8px; color: var(--gold); text-transform: uppercase;
+    margin-bottom: 24px; opacity: 0; animation: fadeUp 1s ease 0.3s forwards; }
+.hero h1 { font-family: "Noto Serif SC", serif; font-size: clamp(3rem,8vw,6rem); font-weight: 900;
+    color: #FFF;line-height: 1.1; margin-bottom: 20px; text-shadow: 0 4px 30px rgba(0,0,0,0.3);
+    opacity: 0; animation: fadeUp 1s ease 0.6s forwards; }
+.hero h1 .gold-text { color: var(--gold); }
+.hero .subtitle { font-size: clamp(1.1rem,2.5vw,1.6rem); color: #FFF; text-shadow:0 4px 30px rgba(0,0,0,0.3);
+    font-weight: 300; margin-bottom: 40px; line-height: 1.8;
+    opacity: 0; animation: fadeUp 1s ease 0.9s forwards; }
+.stats-bar { display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; margin-top: 40px;
+    opacity: 0; animation: fadeUp 1s ease 1.2s forwards; }
+.stat-item { text-align: center; }
+.stat-item .num { font-family: "Noto Serif SC", serif; font-size: 2.5rem; font-weight: 700;
+    color: var(--gold); display: block; }
+.stat-item .label { font-size: 13px; color: #FFF; text-shadow:0 4px 30px rgba(0,0,0,0.3);letter-spacing: 2px; margin-top: 4px; }
+.scroll-hint { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    color: #FFF; text-shadow:0 4px 30px rgba(0,0,0,0.3); font-size: 12px; letter-spacing: 3px; animation: bounce 2s infinite; }
+@keyframes bounce { 0%,100%{transform:translateX(-50%)translateY(0)} 50%{transform:translateX(-50%)translateY(-10px)} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+/* SECTIONS */
+.section { position: relative; padding: 100px 20px; max-width: 1200px; margin: 0 auto; }
+.section-header { text-align: center; margin-bottom: 60px; }
+.section-header .chapter-num { font-family: "Noto Serif SC", serif; font-size: 14px; color: var(--gold);
+    letter-spacing: 6px; margin-bottom: 12px; }
+.section-header h2 { font-family: "Noto Serif SC", serif; font-size: clamp(2rem,5vw,3.2rem);
+    font-weight: 700; color: var(--red); margin-bottom: 16px; }
+.section-header .desc { font-size: 1.1rem; color: var(--ink-light); max-width: 700px; margin: 0 auto; line-height: 1.8; }
+.lead-in { max-width: 800px; margin: 0 auto 60px; font-size: 1.15rem; line-height: 2;
+    color: var(--ink); text-align: justify; padding: 0 20px; }
+.divider-line { width: 60px; height: 3px; background: var(--gold); margin: 20px auto; border-radius: 2px; }
+.ornament { text-align: center; font-size: 1.5rem; color: var(--gold); margin: 40px 0; letter-spacing: 8px; }
+
+/* CH1 */
+.ch1 { background: var(--paper); }
+.stage-waterfall { max-width: 900px; margin: 0 auto; position: relative; }
+.stage-waterfall .stage-title { text-align: center; font-family: "Noto Serif SC", serif;
+    font-size: 1.3rem; color: var(--red); margin-bottom: 40px; }
+.stage-steps { display: flex; flex-direction: column; gap: 4px; position: relative; }
+.stage-step { display: flex; align-items: center; gap: 20px; padding: 20px 30px; background: #fff;
+    border-left: 4px solid var(--gold); border-radius: 0 12px 12px 0;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06); transition: all 0.3s; cursor: pointer; position: relative; }
+.stage-step:hover { transform: translateX(10px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); border-left-color: var(--red); }
+.stage-step .bar-fill { height: 40px; border-radius: 8px;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+    display: flex; align-items: center; justify-content: flex-end; padding-right: 12px;
+    color: white; font-weight: 700; font-size: 1rem; transition: width 1.5s ease; min-width: 60px; }
+.stage-step .step-label { font-size: 1rem; color: var(--ink); font-weight: 500; min-width: 200px; }
+.stage-step .step-detail { font-size: 0.85rem; color: var(--ink-light); margin-left: auto; text-align: right; }
+.stage-step .tooltip { position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+    background: var(--ink); color: white; padding: 12px 20px; border-radius: 10px;
+    font-size: 0.85rem; white-space: nowrap; opacity: 0; pointer-events: none;
+    transition: all 0.3s; z-index: 10; }
+.stage-step:hover .tooltip { opacity: 1; top: -70px; }
+.stage-step .tooltip::after { content: ""; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+    border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 8px solid var(--ink); }
+.stage-waterfall .stage-base { height: 60px; background: linear-gradient(180deg, var(--stage-brown), #5D2E0C);
+    border-radius: 0 0 20px 20px; margin-top: 4px; display: flex; align-items: center; justify-content: center;
+    color: var(--gold-light); font-family: "Noto Serif SC", serif; font-size: 1.1rem; letter-spacing: 4px; }
+.ch1-toggle { text-align: center; margin: 30px 0; }
+.ch1-toggle button { background: var(--red); color: white; border: none; padding: 12px 32px;
+    border-radius: 30px; font-size: 1rem; cursor: pointer; transition: all 0.3s;
+    font-family: "Noto Sans SC", sans-serif; }
+.ch1-toggle button:hover { background: var(--red-dark); transform: scale(1.05); }
+.ch1-fund-popup { display: none; max-width: 700px; margin: 20px auto; background: #fff;
+    border-radius: 16px; padding: 30px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); border-left: 4px solid var(--gold); }
+.ch1-fund-popup.active { display: block; animation: fadeUp 0.5s ease; }
+.fund-flow { display: flex; align-items: center; justify-content: center; gap: 20px;
+    flex-wrap: wrap; margin-top: 20px; }
+.fund-node { background: linear-gradient(135deg, var(--red), var(--red-dark)); color: white;
+    padding: 16px 24px; border-radius: 12px; text-align: center; min-width: 140px; }
+.fund-node .fund-amount { font-family: "Noto Serif SC", serif; font-size: 1.5rem; font-weight: 700; color: var(--gold); }
+.fund-node .fund-name { font-size: 0.85rem; margin-top: 4px; }
+.fund-arrow { font-size: 1.5rem; color: var(--gold); animation: flowArrow 1.5s ease-in-out infinite; }
+@keyframes flowArrow { 0%,100%{transform:translateX(0);opacity:0.5} 50%{transform:translateX(5px);opacity:1} }
+
+/* CH3 */
+.ch3 { background: var(--paper); }
+.radar-container { max-width: 900px; margin: 0 auto; background: #fff; border-radius: 20px;
+    padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+.radar-slider-wrap { text-align: center; margin-bottom: 40px; }
+.radar-slider-wrap .slider-label { font-size: 1rem; color: var(--ink); margin-bottom: 12px; }
+.radar-slider-wrap .slider-track { display: flex; align-items: center; justify-content: center; gap: 20px; }
+.radar-slider-wrap .slider-track span { font-size: 0.9rem; color: var(--ink-light); font-weight: 500; }
+.radar-slider-wrap input[type="range"] { width: 300px; -webkit-appearance: none; height: 10px;
+    border-radius: 5px; background: linear-gradient(90deg, var(--red), var(--teal)); outline: none; }
+.radar-slider-wrap input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none;
+    width: 28px; height: 28px; border-radius: 50%; background: white; border: 3px solid var(--gold);
+    cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+.radar-canvas-wrap { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+.radar-legend { display: flex; justify-content: center; gap: 30px; margin-top: 20px; flex-wrap: wrap; }
+.radar-legend .legend-item { display: flex; align-items: center; gap: 8px;
+    font-size: 0.9rem; color: var(--ink); }
+.radar-legend .legend-dot { width: 14px; height: 14px; border-radius: 50%; }
+.age-filter { text-align: center; margin: 30px 0; }
+.age-filter button { background: #f0f0f0; color: var(--ink); border: 2px solid transparent;
+    padding: 10px 24px; margin: 0 6px; border-radius: 30px; font-size: 0.95rem;
+    cursor: pointer; transition: all 0.3s; }
+.age-filter button.active { background: var(--red); color: white; border-color: var(--red); }
+.age-filter button:hover { border-color: var(--gold); }
+.innov-popup { display: none; max-width: 500px; margin: 20px auto;
+    background: linear-gradient(135deg, #E0F7FA, #B2EBF2); border-radius: 16px;
+    padding: 30px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); border-left: 4px solid var(--teal);
+    text-align: center; }
+.innov-popup.active { display: block; animation: fadeUp 0.5s ease; }
+.innov-popup h4 { font-family: "Noto Serif SC", serif; color: var(--teal); font-size: 1.3rem; margin-bottom: 12px; }
+.innov-popup p { color: var(--ink); line-height: 1.8; }
+
+/* CH4: 双向共生 */
+.ch4 { background: linear-gradient(180deg, #F0EDE4 0%, var(--paper) 100%); text-align: center; }
+.fusion-viz-wrap { max-width: 900px; margin: 0 auto 40px; position: relative; }
+#fusionCanvas { width: 100%; height: 420px; border-radius: 20px;
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    cursor: grab; display: block; }
+#fusionCanvas:active { cursor: grabbing; }
+.fusion-instruction { font-size: 0.9rem; color: var(--ink-light); margin-top: 12px; }
+.fusion-slogan { font-family: "Noto Serif SC", serif; font-size: clamp(1.5rem,4vw,2.5rem);
+    font-weight: 700; color: var(--red); margin: 40px 0 20px; opacity: 0;
+    transition: all 1.5s ease; text-shadow: 0 2px 10px rgba(198,40,40,0.2); }
+.fusion-slogan.show { opacity: 1; }
+.fusion-data-popup { display: none; max-width: 600px; margin: 20px auto; background: #fff;
+    border-radius: 16px; padding: 24px; box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    border-top: 4px solid var(--gold); }
+.fusion-data-popup.active { display: block; animation: fadeUp 0.5s ease; }
+
+/* QUOTE CARDS */
+.quote-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;
+    margin-top: 60px; max-width: 900px; margin-left: auto; margin-right: auto; }
+.quote-card { background: #fff; padding: 30px; border-radius: 16px;
+    border-top: 4px solid var(--gold); box-shadow: 0 4px 20px rgba(0,0,0,0.08); position: relative; }
+.quote-card::before { content: "\201C"; font-family: "Noto Serif SC", serif; font-size: 4rem;
+    color: var(--gold); opacity: 0.3; position: absolute; top: -10px; left: 20px; }
+.quote-card .quote-text { font-size: 1rem; line-height: 1.8; color: var(--ink);
+    margin-bottom: 16px; font-style: italic; }
+.quote-card .quote-author { font-size: 0.9rem; color: var(--ink-light); text-align: right; }
+
+/* FOOTER */
+.footer { background: var(--ink); color: white; text-align: center; padding: 60px 20px 80px; }
+.footer .slogan { font-family: "Noto Serif SC", serif; font-size: clamp(1.5rem,4vw,2.5rem);
+    font-weight: 700; color: var(--gold); margin-bottom: 20px; line-height: 1.6; }
+.footer .slogan-sub { font-size: 1rem; color: rgba(255,255,255,0.6); letter-spacing: 4px; }
+.footer .credits { margin-top: 40px; font-size: 0.85rem; color: rgba(255,255,255,0.4); }
+.team-info { margin-top: 40px; text-align: center; }
+.team-section { margin-bottom: 28px; }
+.team-title { font-family: "Noto Serif SC", serif; font-size: 1.05rem; font-weight: 600; color: var(--gold); margin-bottom: 12px; letter-spacing: 3px; }
+.team-line { font-size: 0.9rem; color: rgba(255,255,255,0.55); line-height: 2.2; letter-spacing: 1px; }
+
+/* SCROLL REVEAL */
+.reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease; }
+.reveal.active { opacity: 1; transform: translateY(0); }
+
+/* ==================== NAVIGATION BAR ==================== */
+.top-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 10000;
+    background: rgba(253, 246, 227, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(212, 160, 23, 0.2);
+    transition: all 0.4s ease;
+}
+
+.top-nav.scrolled {
+    background: rgba(253, 246, 227, 0.98);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+}
+
+.nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-logo {
+    font-family: "Noto Serif SC", serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--red);
+    text-decoration: none;
+    letter-spacing: 2px;
+    white-space: nowrap;
+    transition: color 0.3s;
+}
+
+.nav-logo:hover {
+    color: var(--gold);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.nav-link {
+    font-family: "Noto Sans SC", sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ink-light);
+    text-decoration: none;
+    padding: 8px 18px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    letter-spacing: 1px;
+}
+
+.nav-link:hover {
+    color: var(--red);
+    background: rgba(198, 40, 40, 0.06);
+}
+
+.nav-link.active {
+    color: var(--red);
+    background: rgba(198, 40, 40, 0.1);
+    font-weight: 600;
+}
+
+.nav-link.active::after {
+    content: "";
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 1px;
+}
+
+/* Mobile toggle button */
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    gap: 5px;
+    padding: 0;
+}
+
+.nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--ink);
+    border-radius: 1px;
+    transition: all 0.3s ease;
+}
+
+.nav-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.nav-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Mobile menu overlay */
+.nav-mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 56px 0 0 0;
+    background: rgba(253, 246, 227, 0.98);
+    backdrop-filter: blur(20px);
+    z-index: 9999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 40px;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.nav-mobile-overlay.active {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+.nav-mobile-overlay .nav-link {
+    font-size: 1.1rem;
+    padding: 14px 32px;
+    border-radius: 30px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+    .nav-toggle {
+        display: flex;
+    }
+    .nav-inner {
+        height: 52px;
+        padding: 0 16px;
+    }
+    .nav-logo {
+        font-size: 0.95rem;
+    }
+}
+
+/* Offset body for fixed nav */
+body {
+    padding-top: 56px;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 52px;
+    }
+}
+
+/* Audio widget position adjustment */
+.audio-widget {
+    top: 72px;
+}
+
+@media (max-width: 768px) {
+    .audio-widget {
+        top: 68px;
+    }
+}
+
+/* ==================== CH2: 分双图独立互动方案 ==================== */
+.ch2 { background: linear-gradient(180deg, var(--paper) 0%, #F0EDE4 100%); }
+
+/* 全局对比按钮 */
+.dual-compare-bar { text-align: center; margin-bottom: 40px; }
+.compare-btn { background: linear-gradient(135deg, var(--red), var(--red-dark)); color: white; border: none; padding: 14px 40px; border-radius: 50px; font-size: 1.05rem; font-family: "Noto Serif SC", serif; font-weight: 600; cursor: pointer; transition: all 0.3s; letter-spacing: 2px; box-shadow: 0 6px 20px rgba(198,40,40,0.3); }
+.compare-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(198,40,40,0.4); }
+.compare-btn .btn-icon { margin-right: 8px; font-size: 1.2rem; }
+
+/* 双图容器 */
+.dual-viz-container { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1100px; margin: 0 auto; }
+@media (max-width: 900px) { .dual-viz-container { grid-template-columns: 1fr; } }
+
+/* ========== 左图：游子思乡水袖滑轨 ========== */
+.left-viz { background: linear-gradient(180deg, #fff 0%, var(--cream) 100%); border-radius: 24px; padding: 35px 25px; box-shadow: 0 8px 40px rgba(0,0,0,0.08); border: 1px solid rgba(212,160,23,0.15); position: relative; }
+.left-viz::before { content: "◆ ◇ ◆"; position: absolute; top: 12px; left: 50%; transform: translateX(-50%); color: var(--gold); font-size: 0.85rem; letter-spacing: 8px; opacity: 0.4; }
+
+.viz-header { text-align: center; margin-bottom: 30px; padding-top: 10px; }
+.viz-header .viz-icon { font-size: 2rem; margin-bottom: 8px; }
+.viz-header .viz-title { font-family: "Noto Serif SC", serif; font-size: 1.3rem; font-weight: 700; color: var(--red); margin-bottom: 6px; }
+.viz-header .viz-sub { font-size: 0.85rem; color: var(--ink-light); }
+
+.viz-action { text-align: center; margin-bottom: 25px; }
+.viz-action-btn { background: #fff; border: 2px solid var(--gold); color: var(--ink); padding: 10px 28px; border-radius: 30px; font-size: 0.95rem; font-family: "Noto Serif SC", serif; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+.viz-action-btn:hover { background: var(--gold); color: white; transform: scale(1.05); }
+.viz-action-btn.active { background: var(--red); border-color: var(--red); color: white; }
+
+/* 水袖轨道 */
+.sleeve-track { position: relative; margin-bottom: 45px; padding: 0 15px; }
+.sleeve-track:last-child { margin-bottom: 0; }
+
+.track-label-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-left: 5px; }
+.track-avatar { width: 32px; height: 32px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+.track-name { font-family: "Noto Serif SC", serif; font-size: 1rem; font-weight: 600; }
+.track-name.red { color: #B71C1C; }
+.track-name.orange { color: #E65100; }
+.track-name.teal { color: #00695C; }
+
+.track-rail { position: relative; height: 48px; border-radius: 10px; background: linear-gradient(90deg, rgba(0,0,0,0.03), rgba(0,0,0,0.01)); border: 1px solid rgba(0,0,0,0.06); }
+
+.sleeve-fill { position: absolute; left: 0; top: 0; height: 100%; border-radius: 10px; transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); display: flex; align-items: center; overflow: hidden; }
+.sleeve-fill.red { background: linear-gradient(90deg, #B71C1C, #C62828, #E57373); box-shadow: 0 2px 10px rgba(198,40,40,0.2); }
+.sleeve-fill.orange { background: linear-gradient(90deg, #E65100, #FF8F00, #FFD54F); box-shadow: 0 2px 10px rgba(255,143,0,0.2); }
+.sleeve-fill.teal { background: linear-gradient(90deg, #00695C, #4DB6AC, #80CBC4); box-shadow: 0 2px 10px rgba(77,182,172,0.2); }
+
+.sleeve-texture { position: absolute; inset: 0; opacity: 0.12; background-image: repeating-linear-gradient(90deg, transparent, transparent 6px, rgba(255,255,255,0.3) 6px, rgba(255,255,255,0.3) 8px); pointer-events: none; }
+
+/* 刺绣游标 */
+.cursor-embroidery { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 38px; height: 48px; cursor: grab; z-index: 10; transition: left 0.15s ease; user-select: none; }
+.cursor-embroidery:active { cursor: grabbing; }
+.cursor-embroidery .cursor-body { width: 100%; height: 100%; position: relative; }
+.cursor-diamond { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(45deg); width: 24px; height: 24px; border-radius: 4px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); box-shadow: 0 2px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.5); border: 2px solid #fff; }
+.cursor-diamond::after { content: ""; position: absolute; inset: 3px; border: 1px dashed rgba(139,69,19,0.3); border-radius: 2px; }
+.cursor-tassel { position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); width: 2px; height: 12px; background: linear-gradient(180deg, var(--gold), transparent); }
+.cursor-tassel::before, .cursor-tassel::after { content: ""; position: absolute; top: 0; width: 2px; height: 10px; background: linear-gradient(180deg, var(--gold), transparent); }
+.cursor-tassel::before { left: -3px; transform: rotate(-12deg); }
+.cursor-tassel::after { left: 3px; transform: rotate(12deg); }
+
+.cursor-value { position: absolute; top: -32px; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--gold-light); padding: 3px 10px; border-radius: 8px; font-family: "Noto Serif SC", serif; font-size: 0.85rem; font-weight: 700; white-space: nowrap; opacity: 0; transition: opacity 0.2s; pointer-events: none; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+.cursor-value::after { content: ""; position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%); border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 5px solid var(--ink); }
+.cursor-embroidery:hover .cursor-value, .cursor-embroidery.dragging .cursor-value { opacity: 1; }
+
+/* 刻度 */
+.track-scale { position: relative; height: 26px; margin-top: 6px; }
+.scale-line { position: absolute; top: 0; width: 1px; height: 8px; background: rgba(0,0,0,0.2); }
+.scale-line.major { height: 14px; background: rgba(0,0,0,0.35); }
+.scale-line.major::after { content: attr(data-label); position: absolute; top: 16px; left: 50%; transform: translateX(-50%); font-size: 0.65rem; color: var(--ink-light); font-family: "Noto Serif SC", serif; }
+.scale-line.snap { background: var(--gold); height: 16px; width: 2px; }
+
+/* 悬停气泡 */
+.quote-bubble { position: fixed; background: #fff; border-radius: 16px; padding: 18px 22px; max-width: 300px; box-shadow: 0 12px 40px rgba(0,0,0,0.18); border-left: 4px solid var(--gold); z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; transform: translateY(10px); font-size: 0.88rem; line-height: 1.8; color: var(--ink); }
+.quote-bubble.show { opacity: 1; transform: translateY(0); }
+.quote-bubble .quote-text { font-style: italic; margin-bottom: 8px; }
+.quote-bubble .quote-author { text-align: right; font-size: 0.78rem; color: var(--ink-light); }
+.quote-bubble::after { content: ""; position: absolute; bottom: -10px; left: 30px; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 10px solid #fff; }
+
+/* ========== 右图：市民认同戏台卡片 ========== */
+.right-viz { background: linear-gradient(180deg, #fff 0%, var(--cream) 100%); border-radius: 24px; padding: 35px 25px; box-shadow: 0 8px 40px rgba(0,0,0,0.08); border: 1px solid rgba(212,160,23,0.15); position: relative; }
+.right-viz::before { content: "◆ ◇ ◆"; position: absolute; top: 12px; left: 50%; transform: translateX(-50%); color: var(--gold); font-size: 0.85rem; letter-spacing: 8px; opacity: 0.4; }
+
+.identity-tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 25px; flex-wrap: wrap; }
+.identity-tab { background: #f0f0f0; border: 2px solid transparent; color: var(--ink); padding: 10px 22px; border-radius: 30px; font-size: 0.9rem; font-family: "Noto Serif SC", serif; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+.identity-tab:hover { border-color: var(--gold); }
+.identity-tab.active { background: var(--red); color: white; border-color: var(--red); }
+
+.identity-cards { display: flex; flex-direction: column; gap: 18px; }
+.identity-card { background: #fff; border-radius: 16px; padding: 22px; box-shadow: 0 4px 16px rgba(0,0,0,0.06); border-left: 5px solid var(--gold); cursor: pointer; transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; overflow: hidden; }
+.identity-card:hover { transform: translateX(8px) scale(1.02); box-shadow: 0 10px 30px rgba(0,0,0,0.12); }
+.identity-card.elderly { border-left-color: #C62828; }
+.identity-card.middle { border-left-color: #FF8F00; }
+.identity-card.youth { border-left-color: #4DB6AC; }
+
+.card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.card-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #f0f0f0, #e0e0e0); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+.card-info { flex: 1; }
+.card-name { font-family: "Noto Serif SC", serif; font-size: 1.05rem; font-weight: 700; }
+.card-name.elderly { color: var(--red); }
+.card-name.middle { color: var(--sleeve-orange); }
+.card-name.youth { color: var(--teal); }
+.card-sub { font-size: 0.78rem; color: var(--ink-light); margin-top: 2px; }
+
+.card-pct-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; }
+.card-pct { font-family: "Noto Serif SC", serif; font-size: 2.8rem; font-weight: 900; line-height: 1; }
+.card-pct.elderly { color: var(--red); }
+.card-pct.middle { color: var(--sleeve-orange); }
+.card-pct.youth { color: var(--teal); }
+.card-pct-label { font-size: 0.85rem; color: var(--ink-light); font-weight: 500; }
+
+.card-progress { margin-bottom: 10px; }
+.card-progress-track { height: 10px; background: rgba(0,0,0,0.05); border-radius: 5px; overflow: hidden; }
+.card-progress-fill { height: 100%; border-radius: 5px; transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.card-progress-fill.elderly { background: linear-gradient(90deg, #B71C1C, #E57373); }
+.card-progress-fill.middle { background: linear-gradient(90deg, #E65100, #FFD54F); }
+.card-progress-fill.youth { background: linear-gradient(90deg, #00695C, #80CBC4); }
+
+.card-scale { display: flex; justify-content: space-between; margin-top: 6px; }
+.card-scale span { font-size: 0.6rem; color: rgba(0,0,0,0.25); font-family: "Noto Serif SC", serif; }
+
+.card-hint { text-align: right; font-size: 0.75rem; color: var(--gold); margin-top: 8px; font-weight: 500; }
+
+/* 卡片弹窗 */
+.card-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity 0.3s; }
+.card-modal-overlay.active { display: flex; opacity: 1; }
+.card-modal { background: linear-gradient(180deg, #FFF8E7, #F5E6C8); border-radius: 24px; padding: 0; max-width: 480px; width: 100%; box-shadow: 0 25px 80px rgba(0,0,0,0.35); transform: translateY(30px) scale(0.95); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); border: 2px solid var(--stage-brown); overflow: hidden; }
+.card-modal-overlay.active .card-modal { transform: translateY(0) scale(1); }
+.card-modal-header { height: 70px; display: flex; align-items: center; justify-content: center; position: relative; }
+.card-modal-header.elderly { background: linear-gradient(135deg, #B71C1C, #C62828); }
+.card-modal-header.middle { background: linear-gradient(135deg, #E65100, #FF8F00); }
+.card-modal-header.youth { background: linear-gradient(135deg, #00695C, #4DB6AC); }
+.card-modal-close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; font-size: 1.3rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+.card-modal-close:hover { background: rgba(255,255,255,0.3); transform: rotate(90deg); }
+.card-modal-title { color: white; font-family: "Noto Serif SC", serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 2px; }
+.card-modal-body { padding: 28px; }
+.card-modal-pct { font-family: "Noto Serif SC", serif; font-size: 3.5rem; font-weight: 900; margin-bottom: 8px; }
+.card-modal-header.elderly ~ .card-modal-body .card-modal-pct { color: var(--red); }
+.card-modal-header.middle ~ .card-modal-body .card-modal-pct { color: var(--sleeve-orange); }
+.card-modal-header.youth ~ .card-modal-body .card-modal-pct { color: var(--teal); }
+.card-modal-label { font-size: 1rem; color: var(--ink-light); margin-bottom: 18px; font-weight: 500; }
+.card-modal-quote { background: rgba(212,160,23,0.08); border-radius: 14px; padding: 18px; border-left: 4px solid var(--gold); margin-bottom: 18px; }
+.card-modal-quote-text { font-size: 0.95rem; line-height: 1.9; color: var(--ink); font-style: italic; }
+.card-modal-quote-author { text-align: right; font-size: 0.85rem; color: var(--ink-light); margin-top: 12px; }
+.card-modal-extra { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.card-modal-extra-item { background: #fff; border-radius: 10px; padding: 12px; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+.card-modal-extra-item .extra-num { font-family: "Noto Serif SC", serif; font-size: 1.3rem; font-weight: 700; color: var(--red); }
+.card-modal-extra-item .extra-label { font-size: 0.72rem; color: var(--ink-light); margin-top: 4px; }
+
+/* 相融可视化玩法说明 */
+.fusion-play-guide { max-width: 900px; margin: 20px auto 16px; }
+.guide-card { background: linear-gradient(135deg, #fff 0%, var(--cream) 100%); border-radius: 16px; 
+    padding: 16px 22px; box-shadow: 0 4px 16px rgba(0,0,0,0.05); border: 1px solid rgba(212,160,23,0.15); }
+.guide-card .guide-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.guide-card .guide-icon { font-size: 1.3rem; line-height: 1; }
+.guide-card .guide-title { font-family: "Noto Serif SC", serif; font-size: 1rem; font-weight: 700; 
+    color: var(--red); line-height: 1; }
+.guide-card .guide-steps { display: flex; gap: 12px; flex-wrap: wrap; }
+.guide-card .guide-step { font-size: 0.8rem; color: var(--ink-light); display: flex; align-items: center; gap: 5px; }
+.guide-card .guide-step .step-num { width: 20px; height: 20px; border-radius: 50%; 
+    background: linear-gradient(135deg, var(--gold), var(--red)); color: white; 
+    display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; flex-shrink: 0; }
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .guide-card { padding: 14px 18px; }
+    .guide-card .guide-steps { flex-direction: column; gap: 8px; }
+    .sleeve-guide-row { gap: 10px; }
+    .cursor-embroidery { width: 32px; height: 42px; }
+    .cursor-diamond { width: 20px; height: 20px; }
+    .track-rail { height: 42px; }
+    .identity-card { padding: 18px; }
+    .card-pct { font-size: 2.2rem; }
+    .stats-bar { gap: 30px; }
+    .stage-step { flex-direction: column; align-items: flex-start; }
+    .stage-step .step-detail { margin-left: 0; text-align: left; margin-top: 8px; }
+}
+
+/* ==================== CH3: 双雷达图并排布局 ==================== */
+
+/* 双雷达图容器 */
+.dual-radar-wrap { display: flex; align-items: stretch; justify-content: center; gap: 0; max-width: 900px; margin: 0 auto; flex-wrap: wrap; }
+
+/* 单个雷达图面板 */
+.radar-panel { flex: 1; min-width: 280px; max-width: 400px; background: linear-gradient(180deg, #fff 0%, var(--cream) 100%); border-radius: 20px; padding: 25px 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid rgba(212,160,23,0.12); position: relative; }
+.radar-panel-pain { border-top: 4px solid var(--red); }
+.radar-panel-innov { border-top: 4px solid var(--teal); }
+
+/* 面板头部 */
+.radar-panel-header { text-align: center; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px dashed rgba(0,0,0,0.08); }
+.radar-panel-icon { font-size: 1.8rem; margin-bottom: 6px; }
+.radar-panel-title { font-family: "Noto Serif SC", serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; }
+.radar-panel-pain .radar-panel-title { color: var(--red); }
+.radar-panel-innov .radar-panel-title { color: var(--teal); }
+.radar-panel-subtitle { font-size: 0.78rem; color: var(--ink-light); letter-spacing: 2px; }
+
+/* Canvas容器 */
+.radar-panel-canvas { display: flex; justify-content: center; margin-bottom: 12px; }
+.radar-panel-canvas canvas { display: block; }
+
+/* 面板图例 */
+.radar-panel-legend { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; padding: 10px 8px; background: rgba(0,0,0,0.02); border-radius: 10px; }
+.radar-panel-legend .legend-row { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--ink); }
+.radar-panel-legend .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+/* VS分隔线 */
+.vs-divider { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 10px; min-width: 50px; }
+.vs-line { width: 2px; flex: 1; background: linear-gradient(180deg, transparent, var(--gold), transparent); }
+.vs-text { font-family: "Noto Serif SC", serif; font-size: 1.1rem; font-weight: 900; color: var(--gold); padding: 10px 0; letter-spacing: 2px; }
+
+/* 人群筛选 */
+.age-filter { text-align: center; margin: 20px 0 30px; }
+.age-filter button { background: #f0f0f0; border: 2px solid transparent; color: var(--ink); padding: 10px 22px; margin: 0 5px; border-radius: 30px; font-size: 0.9rem; font-family: "Noto Sans SC", sans-serif; font-weight: 500; cursor: pointer; transition: all 0.3s; }
+.age-filter button:hover { border-color: var(--gold); }
+.age-filter button.active { background: var(--red); color: white; border-color: var(--red); }
+
+/* 右下角备注 */
+.age-note { text-align: right; font-size: 0.8rem; color: var(--ink-light); margin-top: 20px; padding-right: 10px; font-style: italic; font-family: "Noto Serif SC", serif; }
+
+/* 雷达图tooltip */
+.radar-tooltip { position: fixed; background: var(--ink); color: white; padding: 8px 14px; border-radius: 8px; font-size: 0.8rem; white-space: nowrap; pointer-events: none; z-index: 1000; opacity: 0; transition: opacity 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+.radar-tooltip.show { opacity: 1; }
+.radar-tooltip::after { content: ""; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 6px solid var(--ink); }
+
+/* 解决方案弹窗 */
+.solution-popup { display: none; max-width: 520px; margin: 30px auto 0; background: #fff; border-radius: 20px; box-shadow: 0 12px 40px rgba(0,0,0,0.15); border-left: 5px solid var(--gold); overflow: hidden; animation: slideInRight 0.5s ease; }
+.solution-popup.active { display: block; }
+@keyframes slideInRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+.solution-popup-inner { padding: 0; }
+.solution-header { display: flex; align-items: center; gap: 12px; padding: 18px 24px; background: linear-gradient(135deg, var(--paper), #F0EDE4); border-bottom: 1px solid rgba(0,0,0,0.06); }
+.solution-icon { font-size: 1.4rem; }
+.solution-title { font-family: "Noto Serif SC", serif; font-size: 1.15rem; font-weight: 700; color: var(--red); flex: 1; }
+.solution-close { width: 32px; height: 32px; border-radius: 50%; background: rgba(0,0,0,0.06); border: none; color: var(--ink-light); font-size: 1.3rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+.solution-close:hover { background: var(--red); color: white; transform: rotate(90deg); }
+.solution-body { padding: 22px 24px; }
+.solution-summary { font-size: 0.95rem; line-height: 1.8; color: var(--ink); margin-bottom: 16px; padding: 14px; background: rgba(212,160,23,0.06); border-radius: 12px; border-left: 3px solid var(--gold); }
+.solution-divider { height: 1px; background: rgba(0,0,0,0.08); margin: 16px 0; }
+.solution-item { display: flex; gap: 12px; margin-bottom: 14px; align-items: flex-start; }
+.solution-item:last-child { margin-bottom: 0; }
+.solution-item-num { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, var(--red), var(--gold)); color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+.solution-item-content { flex: 1; }
+.solution-item-title { font-weight: 700; color: var(--ink); font-size: 0.9rem; margin-bottom: 4px; }
+.solution-item-desc { font-size: 0.85rem; color: var(--ink-light); line-height: 1.7; }
+
+/* 文创创业彩蛋 */
+.innov-easter-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px; opacity: 0; transition: opacity 0.3s; }
+.innov-easter-overlay.active { display: flex; opacity: 1; }
+.innov-easter-card { background: linear-gradient(180deg, #FFF8E7, #F5E6C8); border-radius: 24px; max-width: 440px; width: 100%; box-shadow: 0 25px 80px rgba(0,0,0,0.3); transform: translateY(30px) scale(0.95); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); border: 2px solid var(--stage-brown); overflow: hidden; position: relative; }
+.innov-easter-overlay.active .innov-easter-card { transform: translateY(0) scale(1); }
+.innov-easter-close { position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white; font-size: 1.3rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; z-index: 10; }
+.innov-easter-close:hover { background: rgba(255,255,255,0.4); transform: rotate(90deg); }
+.innov-easter-header { padding: 28px 24px 20px; text-align: center; }
+.innov-easter-icon { font-size: 2.5rem; margin-bottom: 10px; }
+.innov-easter-title { font-family: "Noto Serif SC", serif; font-size: 1.3rem; font-weight: 700; color: white; letter-spacing: 2px; }
+.innov-easter-body { padding: 24px; background: #fff; }
+.innov-easter-item { display: flex; gap: 14px; margin-bottom: 16px; align-items: flex-start; padding: 12px; background: rgba(212,160,23,0.05); border-radius: 12px; border-left: 3px solid var(--teal); }
+.innov-easter-item:last-child { margin-bottom: 0; }
+.innov-easter-num { font-family: "Noto Serif SC", serif; font-size: 1.2rem; font-weight: 900; color: var(--teal); line-height: 1; }
+.innov-easter-content { flex: 1; }
+.innov-easter-content strong { display: block; color: var(--ink); font-size: 0.95rem; margin-bottom: 4px; }
+.innov-easter-content span { font-size: 0.85rem; color: var(--ink-light); line-height: 1.6; }
+.innov-easter-hint { text-align: center; margin-top: 18px; padding-top: 14px; border-top: 1px dashed rgba(0,0,0,0.1); font-size: 0.8rem; color: var(--ink-light); font-style: italic; }
+
+/* 数据节点闪烁动效 */
+@keyframes nodeFlash { 0%,100% { transform: scale(1); } 50% { transform: scale(1.4); } }
+.node-flash { animation: nodeFlash 0.6s ease-in-out 2; }
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .dual-radar-wrap { flex-direction: column; align-items: center; }
+    .vs-divider { flex-direction: row; padding: 10px 0; width: 100%; max-width: 200px; }
+    .vs-line { width: auto; height: 2px; flex: 1; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+    .vs-text { padding: 0 10px; }
+    .radar-panel { max-width: 100%; width: 100%; }
+}
+
+/* 首行缩进 */
+.lead-in p,
+.quote-card .quote-text,
+.quote-card .quote-author,
+.card-modal-quote-text,
+.card-modal-quote-author,
+.solution-summary,
+.solution-item-desc,
+.innov-easter-content span,
+.ch1-fund-popup p,
+.fund-node .fund-name,
+.stage-step .step-detail,
+.stage-step .tooltip,
+.radar-panel-subtitle,
+.age-note,
+.fusion-instruction,
+.card-sub,
+.card-hint,
+.card-pct-label,
+.viz-sub,
+.card-modal-label,
+.innov-easter-hint {
+    text-indent: 2em;
+}
+
+/* 卡片内的quote-text需要调整padding来配合缩进 */
+.quote-card .quote-text {
+    padding-left: 0;
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION BAR -->
+<nav class="top-nav">
+    <div class="nav-inner">
+        <a href="#" class="nav-logo">一台戏与一座城</a>
+        <div class="nav-links">
+            <a href="#ch1" class="nav-link active">戏润民生，城托戏脉</a>
+            <a href="#ch2" class="nav-link">戏为乡愁，城以戏荣</a>
+            <a href="#ch3" class="nav-link">戏顺时变，城助戏火</a>
+            <a href="#ch4" class="nav-link">根叶相依，城与戏共生</a>
+        </div>
+        <button class="nav-toggle" onclick="toggleNav()" aria-label="菜单">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</nav>
+
+<div class="audio-widget" onclick="toggleAudio()">
+    <div class="icon">&#9836;</div>
+    <div class="label">黄梅戏 · 天仙配</div>
+    <div class="wave" id="audioWave" style="display:none;">
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+</div>
+<audio id="bgAudio" loop><source src="audio/bg_music.mp3" type="audio/mpeg"></audio>
+
+<section class="hero">
+    <div class="hero-bg-pattern"></div>
+    <div class="drum-rings"><div class="ring"></div><div class="ring"></div><div class="ring"></div><div class="ring"></div></div>
+    <div class="hero-content">
+        <div class="eyebrow">百人样本解码安庆城与黄梅戏的共生密码</div>
+        <h1>一台戏与<span class="gold-text">一座城</span></h1>
+        <p class="subtitle">安庆菱湖公园旁的小戏台，锣鼓声又响起来了。<br>闻声而来的大爷大妈们搬着塑料板凳，三三两两聚集起来。<br>卖干货的李婶推着小车紧随其后——"哪里有戏唱，我就去哪里卖。"</p>
+        <div class="stats-bar">
+            <div class="stat-item"><span class="num">91%</span><span class="label">认定城市符号</span></div>
+            <div class="stat-item"><span class="num">97%</span><span class="label">游子推介家乡</span></div>
+            <div class="stat-item"><span class="num">60%</span><span class="label">依托戏台增收</span></div>
+            <div class="stat-item"><span class="num">100</span><span class="label">受访市民</span></div>
+        </div>
+    </div>
+    <div class="scroll-hint">向下滚动探索 &darr;</div>
+</section>
+
+
+
+<section class="section ch1" id="ch1">
+    <div class="section-header reveal">
+        <h2>戏润民生，城托戏脉</h2>
+        <div class="divider-line"></div>
+        <p class="desc">在这座城里，戏台子往往是普通百姓的聚宝盆。<br>黄梅戏能富民吗？<br>答案很明显——虽然不是产业，但仍有微利补贴。</p>
+    </div>
+    <div class="lead-in reveal">
+        <p>对于大多数家庭而言，看戏或许属于非必要消费，但对于那些在街角摆摊的小贩、打零工的散工来说，戏台一搭，人气一聚，就是真金白银的补贴。调研中，<strong>14%</strong>的受访者会通过摆摊的方式依托黄梅戏获得稳定的额外收入，<strong>46%</strong>的人因戏曲演出活动会增加临时性收入。</p>
+    </div>
+    <div class="stage-waterfall reveal">
+        <div class="stage-title">&#9670; 戏台聚宝盆分层交互瀑布图 &#9670;</div>
+        <div class="stage-steps">
+            <div class="stage-step">
+                <div class="step-label">稳定摆摊收入</div>
+                <div class="bar-fill" data-width="14%" style="width:0%">14%</div>
+                <div class="step-detail">李婶：一天多挣几十块</div>
+                <div class="tooltip">李婶推着小车紧随戏台，"哪里有戏唱，我就去哪里卖"</div>
+            </div>
+            <div class="stage-step">
+                <div class="step-label">临时增收</div>
+                <div class="bar-fill" data-width="46%" style="width:0%">46%</div>
+                <div class="step-detail">王先生：帮一天给个百来块</div>
+                <div class="tooltip">45岁的王先生在村子里帮忙搬道具搭台子，"戏班一来我都会来问"</div>
+            </div>
+            <div class="stage-step">
+                <div class="step-label">休闲消遣</div>
+                <div class="bar-fill" data-width="65%" style="width:0%;background:linear-gradient(90deg,#8B4513,#D4A017)">65%</div>
+                <div class="step-detail">视黄梅戏为消遣</div>
+                <div class="tooltip">大多数市民将看戏视为休闲娱乐</div>
+            </div>
+            <div class="stage-step">
+                <div class="step-label">生计渠道</div>
+                <div class="bar-fill" data-width="21%" style="width:0%;background:linear-gradient(90deg,#C62828,#E57373)">21%</div>
+                <div class="step-detail">视黄梅戏为小额生计</div>
+                <div class="tooltip">戏台经济是对普通人对抗生活压力的一点缓冲</div>
+            </div>
+        </div>
+        <div class="stage-base">戏台底座 · 城市财政托举</div>
+    </div>
+    <div class="ch1-toggle reveal">
+        <button onclick="toggleFundPopup()">&#127914; 点击戏台角落货摊 · 查看财政补贴资金流动</button>
+    </div>
+    <div class="ch1-fund-popup" id="fundPopup">
+        <h3 style="font-family:'Noto Serif SC',serif;color:var(--red);margin-bottom:16px;">全年财政补贴资金流动</h3>
+        <p style="color:var(--ink-light);margin-bottom:20px;">自2011年起，市财政建立稳定投入机制，每年安排专项资金</p>
+        <div class="fund-flow">
+            <div class="fund-node"><div class="fund-amount">3000万</div><div class="fund-name">黄梅戏专项资金</div></div>
+            <div class="fund-arrow">&rarr;</div>
+            <div class="fund-node"><div class="fund-amount">500万</div><div class="fund-name">黄梅戏艺术节</div></div>
+            <div class="fund-arrow">&rarr;</div>
+            <div class="fund-node"><div class="fund-amount">300万</div><div class="fund-name">黄梅戏展演周</div></div>
+        </div>
+        <p style="color:var(--ink-light);margin-top:20px;font-size:0.9rem;">"三年一大节，每年一小周" · 成功举办10届黄梅戏艺术节和多届展演周</p>
+    </div>
+    <div class="quote-cards reveal">
+        <div class="quote-card">
+            <p class="quote-text">哪里有戏唱，我就去哪里卖，尤其是露天戏台，锣鼓一响人山人海，一天能多挣个几十块……</p>
+            <p class="quote-author">卖干货的李婶</p>
+        </div>
+        <div class="quote-card">
+            <p class="quote-text">帮一天给个百来块，戏班一来我都会来问。</p>
+            <p class="quote-author">45岁 王先生</p>
+        </div>
+        <div class="quote-card">
+            <p class="quote-text">外地游客来看戏，景区老街人流量多了，但身边开店摆摊的熟人生意并没有得到更可观的提升，主要原因是文旅宣传没做好，黄梅戏带不动大额的经济发展。</p>
+            <p class="quote-author">严教授</p>
+        </div>
+    </div>
+    <div class="lead-in reveal" style="margin-top:60px;">
+        <p>这些依附于戏台的"戏台经济"虽然不是什么庞大的产业，却是对普通人对抗生活压力的一点缓冲，是戏台底下真实的烟火气。黄梅戏以"戏台经济"滋养安庆百姓的生计，而安庆则以真金白银的财政投入为黄梅戏的生存与发展筑牢根基，形成<strong>"百姓靠戏增收，城市靠戏立碑"</strong>的良性循环。</p>
+    </div>
+    <div class="data-source reveal" style="text-align:center;margin-top:40px;font-size:0.8rem;color:var(--ink-light);letter-spacing:1px;">
+        <span style="display:inline-block;padding:6px 16px;background:rgba(212,160,23,0.08);border-radius:20px;border:1px dashed rgba(212,160,23,0.2);">
+            📊 数据来源：实地调研；安庆市人民政府官网《多元资金加持 激活戏旅融合新动能》
+        </span>
+    </div>
+</section>
+
+<div class="ornament">&#9670; &#9671; &#9670;</div>
+
+<!-- ==================== CH2: 分双图独立互动方案 ==================== -->
+<section class="section ch2" id="ch2">
+    <div class="section-header reveal">
+        <h2>戏为乡愁，城以戏荣</h2>
+        <div class="divider-line"></div>
+        <p class="desc">黄梅戏不仅是舞台上的表演，也是普通人日常里的背景音。<br>无论看不看戏，安庆人都把黄梅戏当做家乡的专属烙印。</p>
+    </div>
+
+    <!-- 全局对比按钮 -->
+    <div class="dual-compare-bar reveal">
+        <button class="compare-btn" onclick="syncDualViz()">
+            <span class="btn-icon">⚖️</span>一键对比 · 同步切换两组数据
+        </button>
+    </div>
+
+    <div class="dual-viz-container reveal">
+        <!-- ========== 左图：游子思乡水袖滑轨 ========== -->
+        <div class="left-viz">
+            <div class="viz-header">
+                <div class="viz-icon">🏠</div>
+                <div class="viz-title">游子思乡 · 水袖刻度</div>
+                <div class="viz-sub">外出人群对黄梅戏的思念与推介</div>
+            </div>
+
+            <div class="viz-action">
+                <button class="viz-action-btn active" id="leftPromoteBtn" onclick="lockLeftTo97()">
+                    🔓 解锁 · 恢复思乡数据
+                </button>
+            </div>
+
+            <!-- 老年轨道 -->
+            <div class="sleeve-track" data-group="elderly">
+                <div class="track-label-row">
+                    <div class="track-avatar">👴</div>
+                    <span class="track-name red">老年层 · 红水袖</span>
+                </div>
+                <div class="track-rail" id="rail-left-elderly">
+                    <div class="sleeve-fill red" id="fill-left-elderly" style="width:0%">
+                        <div class="sleeve-texture"></div>
+                    </div>
+                    <div class="cursor-embroidery" id="cursor-left-elderly" style="left:0%">
+                        <div class="cursor-body">
+                            <div class="cursor-diamond"></div>
+                            <div class="cursor-tassel"></div>
+                            <div class="cursor-value" id="value-left-elderly">0%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="track-scale" id="scale-left-elderly"></div>
+            </div>
+
+            <!-- 中年轨道 -->
+            <div class="sleeve-track" data-group="middle">
+                <div class="track-label-row">
+                    <div class="track-avatar">👨</div>
+                    <span class="track-name orange">中年层 · 橙水袖</span>
+                </div>
+                <div class="track-rail" id="rail-left-middle">
+                    <div class="sleeve-fill orange" id="fill-left-middle" style="width:0%">
+                        <div class="sleeve-texture"></div>
+                    </div>
+                    <div class="cursor-embroidery" id="cursor-left-middle" style="left:0%">
+                        <div class="cursor-body">
+                            <div class="cursor-diamond"></div>
+                            <div class="cursor-tassel"></div>
+                            <div class="cursor-value" id="value-left-middle">0%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="track-scale" id="scale-left-middle"></div>
+            </div>
+
+            <!-- 青年轨道 -->
+            <div class="sleeve-track" data-group="youth">
+                <div class="track-label-row">
+                    <div class="track-avatar">🧑</div>
+                    <span class="track-name teal">青年层 · 青水袖</span>
+                </div>
+                <div class="track-rail" id="rail-left-youth">
+                    <div class="sleeve-fill teal" id="fill-left-youth" style="width:0%">
+                        <div class="sleeve-texture"></div>
+                    </div>
+                    <div class="cursor-embroidery" id="cursor-left-youth" style="left:0%">
+                        <div class="cursor-body">
+                            <div class="cursor-diamond"></div>
+                            <div class="cursor-tassel"></div>
+                            <div class="cursor-value" id="value-left-youth">0%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="track-scale" id="scale-left-youth"></div>
+            </div>
+
+            <!-- 水袖玩法说明 + 颜色图例 -->
+            <div class="sleeve-guide-panel">
+                <div class="sgp-header">
+                    <div class="sgp-title-wrap">
+                        <span class="sgp-icon">🎭</span>
+                        <span class="sgp-title">水袖刻度</span>
+                    </div>
+                    
+                </div>
+                <div class="sgp-content">
+                    <div class="sgp-ribbons">
+                        <div class="sgp-ribbon red">
+                            <span class="ribbon-dot">🔴</span>
+                            <span class="ribbon-name">红水袖 · 老年层</span>
+                            <span class="ribbon-hint">思念最深</span>
+                        </div>
+                        <div class="sgp-ribbon orange">
+                            <span class="ribbon-dot">🟠</span>
+                            <span class="ribbon-name">橙水袖 · 中年层</span>
+                            <span class="ribbon-hint">乡愁绵长</span>
+                        </div>
+                        <div class="sgp-ribbon teal">
+                            <span class="ribbon-dot">🟢</span>
+                            <span class="ribbon-name">青水袖 · 青年层</span>
+                            <span class="ribbon-hint">记忆犹存</span>
+                        </div>
+                    </div>
+                    <div class="sgp-divider">
+					<span class="sgp-badge">互动指南：</span></div>
+                    <div class="sgp-steps-flow">
+                        <div class="sgp-step-item">
+                            <span class="sgp-step-num">①</span>
+                            <span class="sgp-step-text">点击上方「解锁」按钮，查看各年龄层真实思乡数据</span>
+                        </div>
+                        
+                        <div class="sgp-step-item">
+                            <span class="sgp-step-num">②</span>
+                            <span class="sgp-step-text">拖动刺绣游标，自由调节各层思念刻度</span>
+                        </div>
+                        
+                        <div class="sgp-step-item">
+                            <span class="sgp-step-num">③</span>
+                            <span class="sgp-step-text">悬停游标，查看真实访谈语录</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 右图：市民认同戏台卡片 ========== -->
+        <div class="right-viz">
+            <div class="viz-header">
+                <div class="viz-icon">🏙️</div>
+                <div class="viz-title">市民认同 · 戏台刻度</div>
+                <div class="viz-sub">本地居民对戏台与城市符号的态度</div>
+            </div>
+
+            <div class="identity-tabs">
+                <button class="identity-tab active" id="tab-free" onclick="switchRightMode('free')">🎭 支持免费搭台</button>
+                <button class="identity-tab" id="tab-symbol" onclick="switchRightMode('symbol')">🏛️ 认可城市符号</button>
+            </div>
+
+            <div class="identity-cards">
+                <!-- 老年卡 -->
+                <div class="identity-card elderly" onclick="openCardModal('elderly')">
+                    <div class="card-header">
+                        <div class="card-avatar">👴</div>
+                        <div class="card-info">
+                            <div class="card-name elderly">老年层</div>
+                            <div class="card-sub">戏曲刻在骨子里</div>
+                        </div>
+                    </div>
+                    <div class="card-pct-row">
+                        <span class="card-pct elderly" id="pct-right-elderly">84%</span>
+                        <span class="card-pct-label" id="label-right-elderly">支持乡村免费搭台</span>
+                    </div>
+                    <div class="card-progress">
+                        <div class="card-progress-track">
+                            <div class="card-progress-fill elderly" id="progress-right-elderly" style="width:0%"></div>
+                        </div>
+                        <div class="card-scale">
+                            <span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span>
+                        </div>
+                    </div>
+                    <div class="card-hint">点击查看详情 →</div>
+                </div>
+
+                <!-- 中年卡 -->
+                <div class="identity-card middle" onclick="openCardModal('middle')">
+                    <div class="card-header">
+                        <div class="card-avatar">👨</div>
+                        <div class="card-info">
+                            <div class="card-name middle">中年层</div>
+                            <div class="card-sub">戏台是烟火底色</div>
+                        </div>
+                    </div>
+                    <div class="card-pct-row">
+                        <span class="card-pct middle" id="pct-right-middle">85%</span>
+                        <span class="card-pct-label" id="label-right-middle">认为民间戏台代表烟火</span>
+                    </div>
+                    <div class="card-progress">
+                        <div class="card-progress-track">
+                            <div class="card-progress-fill middle" id="progress-right-middle" style="width:0%"></div>
+                        </div>
+                        <div class="card-scale">
+                            <span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span>
+                        </div>
+                    </div>
+                    <div class="card-hint">点击查看详情 →</div>
+                </div>
+
+                <!-- 青年卡 -->
+                <div class="identity-card youth" onclick="openCardModal('youth')">
+                    <div class="card-header">
+                        <div class="card-avatar">🧑</div>
+                        <div class="card-info">
+                            <div class="card-name youth">青年层</div>
+                            <div class="card-sub">矛盾而深沉的认同</div>
+                        </div>
+                    </div>
+                    <div class="card-pct-row">
+                        <span class="card-pct youth" id="pct-right-youth">30%</span>
+                        <span class="card-pct-label" id="label-right-youth">几乎不看戏但认可招牌</span>
+                    </div>
+                    <div class="card-progress">
+                        <div class="card-progress-track">
+                            <div class="card-progress-fill youth" id="progress-right-youth" style="width:0%"></div>
+                        </div>
+                        <div class="card-scale">
+                            <span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span>
+                        </div>
+                    </div>
+                    <div class="card-hint">点击查看详情 →</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="lead-in reveal" style="margin-top:50px;">
+        <p>如果说黄梅戏是安庆人的情感寄托，那么安庆就是黄梅戏最坚实的精神家园。这座城市以戏曲为荣，用全民的热爱为他筑牢情感根基。在调研中，<strong>84%</strong>的人支持乡村社区免费搭台唱戏，<strong>85%</strong>的人认为民间戏台代表安庆烟火底色，即便有<strong>30%</strong>的年轻人几乎不看，也依旧认可黄梅戏是安庆的招牌。</p>
+    </div>
+
+    <div class="quote-cards reveal">
+        <div class="quote-card">
+            <p class="quote-text">我们孩童的时候大概四五岁，黄梅戏还是黄梅调，父辈劳作后没事就哼哼黄梅小调，《天仙配》《女驸马》《闹花灯》都是会哼唱的。</p>
+            <p class="quote-author">戏迷严爷爷 · 老年群体 100% 喜爱</p>
+        </div>
+        <div class="quote-card">
+            <p class="quote-text">安庆人爱黄梅戏不是因为它有多火，而是因为它是我们自己的戏，它陪伴着我们长大。</p>
+            <p class="quote-author">安庆市民 · 情感认同</p>
+        </div>
+        <div class="quote-card">
+            <p class="quote-text">30%的青年几乎不看戏，但依旧认可黄梅戏是安庆的招牌——这是一种矛盾而深沉的文化认同。</p>
+            <p class="quote-author">青年群体矛盾心理数据</p>
+        </div>
+    </div>
+    <div class="data-source reveal" style="text-align:center;margin-top:40px;font-size:0.8rem;color:var(--ink-light);letter-spacing:1px;">
+        <span style="display:inline-block;padding:6px 16px;background:rgba(212,160,23,0.08);border-radius:20px;border:1px dashed rgba(212,160,23,0.2);">
+            📊 数据来源：实地调研
+        </span>
+    </div>
+</section>
+
+<!-- 卡片弹窗 -->
+<div class="card-modal-overlay" id="cardModalOverlay" onclick="closeCardModal(event)">
+    <div class="card-modal" onclick="event.stopPropagation()">
+        <div class="card-modal-header" id="cardModalHeader">
+            <button class="card-modal-close" onclick="closeCardModal()">×</button>
+            <div class="card-modal-title" id="cardModalTitle">老年层</div>
+        </div>
+        <div class="card-modal-body">
+            <div class="card-modal-pct" id="cardModalPct">84%</div>
+            <div class="card-modal-label" id="cardModalLabel">支持乡村免费搭台唱戏</div>
+            <div class="card-modal-quote">
+                <div class="card-modal-quote-text" id="cardModalQuote">"老年群体100%支持乡村社区免费搭台唱戏。戏台是城市的灵魂，锣鼓一响，人就聚起来了。"</div>
+                <div class="card-modal-quote-author" id="cardModalAuthor">—— 老年戏迷</div>
+            </div>
+            <div class="card-modal-extra" id="cardModalExtra">
+                <div class="card-modal-extra-item"><div class="extra-num">100%</div><div class="extra-label">喜爱黄梅戏</div></div>
+                <div class="card-modal-extra-item"><div class="extra-num">100%</div><div class="extra-label">认定城市符号</div></div>
+                <div class="card-modal-extra-item"><div class="extra-num">84%</div><div class="extra-label">支持免费戏台</div></div>
+                <div class="card-modal-extra-item"><div class="extra-num">97%</div><div class="extra-label">游子推介率</div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 悬停气泡 -->
+<div class="quote-bubble" id="quoteBubble">
+    <div class="quote-text" id="bubbleText"></div>
+    <div class="quote-author" id="bubbleAuthor"></div>
+</div>
+
+<div class="ornament">&#9670; &#9671; &#9670;</div>
+
+<section class="section ch3" id="ch3">
+    <div class="section-header reveal">
+        <h2>戏顺时变，城助戏火</h2>
+        <div class="divider-line"></div>
+        <p class="desc">黄梅戏要以年轻化、接地气的创新适配时代，<br>而安庆则要以政策引导、群众参与为它延续血脉。</p>
+    </div>
+
+    <div class="radar-container reveal">
+        <!-- 人群筛选 -->
+        <div class="age-filter">
+            <button class="active" onclick="setAgeGroup('all',this)">全部人群</button>
+            <button onclick="setAgeGroup('youth',this)">&#128102; 青年群体</button>
+            <button onclick="setAgeGroup('middle',this)">&#128104; 中年群体</button>
+            <button onclick="setAgeGroup('elderly',this)">&#128116; 老年群体</button>
+        </div>
+
+        <!-- 双雷达图并排 -->
+        <div class="dual-radar-wrap">
+            <!-- 左图：传统困境 -->
+            <div class="radar-panel radar-panel-pain">
+                <div class="radar-panel-header">
+                    <div class="radar-panel-icon">&#128308;</div>
+                    <div class="radar-panel-title">传统传承痛点</div>
+                    <div class="radar-panel-subtitle">左半轴 · 困境维度</div>
+                </div>
+                <div class="radar-panel-canvas">
+                    <canvas id="radarCanvasPain" width="320" height="320"></canvas>
+                </div>
+                <div class="radar-panel-legend">
+                    <div class="legend-row"><span class="legend-dot" style="background:var(--red)"></span>节奏慢</div>
+                    <div class="legend-row"><span class="legend-dot" style="background:var(--red)"></span>碎片化</div>
+                    <div class="legend-row"><span class="legend-dot" style="background:var(--red)"></span>戏台减少</div>
+                    <div class="legend-row"><span class="legend-dot" style="background:var(--red)"></span>认为过时</div>
+                </div>
+            </div>
+
+            <!-- 中间VS标识 -->
+            <div class="vs-divider">
+                <div class="vs-line"></div>
+                <div class="vs-text">VS</div>
+                <div class="vs-line"></div>
+            </div>
+
+            <!-- 右图：创新解法 -->
+            <div class="radar-panel radar-panel-innov">
+                <div class="radar-panel-header">
+                    <div class="radar-panel-icon">&#128994;</div>
+                    <div class="radar-panel-title">城市创新赋能</div>
+                    <div class="radar-panel-subtitle">右半轴 · 解法维度</div>
+                </div>
+                <div class="radar-panel-canvas">
+                    <canvas id="radarCanvasInnov" width="320" height="320"></canvas>
+                </div>
+                <div class="radar-panel-legend">
+                    <div class="legend-row"><span class="legend-dot" style="background:var(--teal)"></span>短视频改编</div>
+                    <div class="legend-row"><span class="legend-dot" style="background:var(--teal)"></span>惠民戏台</div>
+                    <div class="legend-row"><span class="legend-dot" style="background:var(--teal)"></span>文创创业</div>
+                    <div class="legend-row"><span class="legend-dot" style="background:var(--teal)"></span>老年普及</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右下角备注 -->
+        
+        <!-- 三档方案切换 -->
+        <div class="mode-switch-bar" style="text-align:center;margin:30px 0 20px;">
+            <button class="mode-btn mode-btn-pain" onclick="showPainSolution()" style="background:linear-gradient(135deg,#B71C1C,#C62828);color:white;border:none;padding:12px 28px;border-radius:30px;font-size:0.95rem;font-family:'Noto Serif SC',serif;font-weight:600;cursor:pointer;margin:0 6px;transition:all 0.3s;box-shadow:0 4px 15px rgba(198,40,40,0.3);">&#128308; 查看困境补救方案</button>
+            <button class="mode-btn mode-btn-balance" onclick="showBalanceSolution()" style="background:linear-gradient(135deg,var(--gold),#D4A017);color:white;border:none;padding:12px 28px;border-radius:30px;font-size:0.95rem;font-family:'Noto Serif SC',serif;font-weight:600;cursor:pointer;margin:0 6px;transition:all 0.3s;box-shadow:0 4px 15px rgba(212,160,23,0.3);">&#9878; 查看平衡优化方案</button>
+            <button class="mode-btn mode-btn-innov" onclick="showInnovSolution()" style="background:linear-gradient(135deg,var(--teal),#80CBC4);color:white;border:none;padding:12px 28px;border-radius:30px;font-size:0.95rem;font-family:'Noto Serif SC',serif;font-weight:600;cursor:pointer;margin:0 6px;transition:all 0.3s;box-shadow:0 4px 15px rgba(46,139,139,0.3);">&#128994; 查看创新落地方案</button>
+        </div>
+
+        <div class="age-note" id="ageNote">全部人群视角：传统传承困境与城市创新赋能双向博弈</div>
+
+        <!-- 解决方案弹窗 -->
+        <div class="solution-popup" id="solutionPopup">
+            <div class="solution-popup-inner" id="solutionPopupInner">
+                <div class="solution-header">
+                    <div class="solution-icon" id="solutionIcon">&#9878;</div>
+                    <div class="solution-title" id="solutionTitle">平衡优化方案</div>
+                    <button class="solution-close" onclick="closeSolutionPopup()">&times;</button>
+                </div>
+                <div class="solution-body" id="solutionBody">
+                    <div class="solution-summary" id="solutionSummary">传统传承有人坚守，年轻化创新有人尝试，但供需匹配度不足，整体处于瓶颈期。</div>
+                    <div class="solution-divider"></div>
+                    <div class="solution-items" id="solutionItems"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 文创创业彩蛋 -->
+        <div class="innov-easter-overlay" id="innovEasterOverlay" onclick="closeInnovEaster(event)">
+            <div class="innov-easter-card" onclick="event.stopPropagation()">
+                <button class="innov-easter-close" onclick="closeInnovEaster()">&times;</button>
+                <div class="innov-easter-header" style="background:linear-gradient(135deg,var(--teal),#80CBC4);">
+                    <div class="innov-easter-icon">&#127912;</div>
+                    <div class="innov-easter-title">黄梅戏文创创业四大落地畅想</div>
+                </div>
+                <div class="innov-easter-body">
+                    <div class="innov-easter-item">
+                        <div class="innov-easter-num">①</div>
+                        <div class="innov-easter-content">
+                            <strong>视觉文创</strong>
+                            <span>戏曲角色盲盒、戏词书签、国风服饰印花</span>
+                        </div>
+                    </div>
+                    <div class="innov-easter-item">
+                        <div class="innov-easter-num">②</div>
+                        <div class="innov-easter-content">
+                            <strong>数字文创</strong>
+                            <span>黄梅戏经典片段数字藏品、微信表情包</span>
+                        </div>
+                    </div>
+                    <div class="innov-easter-item">
+                        <div class="innov-easter-num">③</div>
+                        <div class="innov-easter-content">
+                            <strong>轻周边</strong>
+                            <span>戏腔车载香薰、戏曲纹样文创礼盒</span>
+                        </div>
+                    </div>
+                    <div class="innov-easter-item">
+                        <div class="innov-easter-num">④</div>
+                        <div class="innov-easter-content">
+                            <strong>体验业态</strong>
+                            <span>沉浸式黄梅戏小剧场、剧本杀戏曲联动</span>
+                        </div>
+                    </div>
+                    <div class="innov-easter-hint">28%青年愿意入局黄梅戏周边文创、数字戏曲相关创业赛道</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="quote-cards reveal">
+        <div class="quote-card">
+            <p class="quote-text">33%的青年认为传统黄梅戏剧情节奏缓慢、冗长拖沓，无法适配日常休闲审美。</p>
+            <p class="quote-author">青年受众痛点数据</p>
+        </div>
+        <div class="quote-card">
+            <p class="quote-text">72.5%的青年认可短视频轻量化改编形式，愿意通过短视频接触黄梅戏。</p>
+            <p class="quote-author">青年创新接受度数据</p>
+        </div>
+        <div class="quote-card">
+            <p class="quote-text">68%的老年戏迷会主动向晚辈普及黄梅戏经典选段、戏曲文化知识。</p>
+            <p class="quote-author">全民传承行动意愿数据</p>
+        </div>
+    </div>
+    <div class="data-source reveal" style="text-align:center;margin-top:40px;font-size:0.8rem;color:var(--ink-light);letter-spacing:1px;">
+        <span style="display:inline-block;padding:6px 16px;background:rgba(212,160,23,0.08);border-radius:20px;border:1px dashed rgba(212,160,23,0.2);">
+            📊 数据来源：实地调研
+        </span>
+    </div>
+</section>
+	 <div class="lead-in reveal">
+        <p  style="text-align:center;">传承从来不是单方面的要求，而是<strong>双向的助力</strong></p>
+		<p  style="text-align:center;">当然传承不能只靠戏曲本身，安庆的主动托举，为黄梅戏薪火相传保驾护航。</p>
+    </div>
+<div class="ornament">&#9670; &#9671; &#9670;</div>
+	
+<section class="section ch4" id="ch4">
+    <div class="section-header reveal">
+        <h2>根叶相依，城与戏共生</h2>
+        <div class="divider-line"></div>
+        <p class="desc">只要戏台还在唱，安庆就有魂；只要安庆还支持，黄梅戏就不会凉。</p>
+    </div>
+    <div class="fusion-viz-wrap reveal">
+        <canvas id="fusionCanvas" width="900" height="420"></canvas>
+        <p class="fusion-instruction">&#128433; 按住并拖动中间的分隔线 · 让「黄梅戏」与「安庆城」相互靠近、吸附融合</p>
+    </div>
+    <div class="fusion-play-guide reveal">
+        <div class="guide-card">
+            <div class="guide-header">
+                <span class="guide-icon">🎮</span>
+                <span class="guide-title">玩法说明</span>
+            </div>
+            <div class="guide-steps">
+                <div class="guide-step"><span class="step-num">①</span>按住并拖动中间的金色分隔线&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                <div class="guide-step"><span class="step-num">②</span>将「黄梅戏」与「安庆城」向中心靠拢&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                <div class="guide-step"><span class="step-num">③</span>当融合度达到 85% 以上，触发金色辉光特效</div>
+                <div class="guide-step"><span class="step-num">④</span>解锁「经济共生 / 情感共生 / 传承共生」三组核心数据</div>
+            </div>
+        </div>
+    </div>
+    <div class="fusion-slogan" id="fusionSlogan"></div>
+    <div class="fusion-data-popup" id="fusionDataPopup">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:center;">
+            <div>
+                <div style="font-size:2rem;margin-bottom:8px;">&#128176;</div>
+                <div style="font-family:'Noto Serif SC',serif;font-size:1.2rem;font-weight:700;color:var(--gold);">经济共生</div>
+                <div style="font-size:0.85rem;color:var(--ink-light);margin-top:6px;">60%增收 · 3000万财政</div>
+            </div>
+            <div>
+                <div style="font-size:2rem;margin-bottom:8px;">&#10084;&#65039;</div>
+                <div style="font-family:'Noto Serif SC',serif;font-size:1.2rem;font-weight:700;color:var(--red);">情感共生</div>
+                <div style="font-size:0.85rem;color:var(--ink-light);margin-top:6px;">91%符号 · 97%推介</div>
+            </div>
+            <div>
+                <div style="font-size:2rem;margin-bottom:8px;">&#128293;</div>
+                <div style="font-family:'Noto Serif SC',serif;font-size:1.2rem;font-weight:700;color:var(--teal);">传承共生</div>
+                <div style="font-size:0.85rem;color:var(--ink-light);margin-top:6px;">72.5%支持 · 68%普及</div>
+            </div>
+        </div>
+    </div>
+    <div class="ch4-closing reveal" style="max-width:800px;margin:50px auto 0;text-align:center;padding:0 20px;">
+        <p style="font-size:1.15rem;line-height:2.2;color:var(--ink);text-align:justify;text-indent:2em;">
+            这台戏是安庆的根，滋养着城市的烟火气，这座城是黄梅戏的魂，托举着黄梅戏的传承与辉煌。这份深入骨髓的相互羁绊，让安庆的烟火气永远鲜活，让黄梅戏的唱腔永远嘹亮。
+        </p>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="slogan" style="margin-bottom:40px;">一台戏扎根一座城，一座城托举一台戏</div>
+    <div class="team-info">
+        <div class="team-section">
+            <div class="team-title">制作团队</div>
+            <div class="team-line">采访：成梦洁 黄晓洁 朱研溪</div>
+            <div class="team-line">数据搜集与清洗：成梦洁 黄晓洁 朱研溪</div>
+            <div class="team-line">撰文：黄晓洁 成梦洁 朱研溪</div>
+            <div class="team-line">数据可视化：朱研溪 黄晓洁</div>
+            <div class="team-line">网页制作：朱研溪</div>
+        </div>
+        <div class="team-section">
+            <div class="team-title">指导教师</div>
+            <div class="team-line">江娟老师</div>
+        </div>
+    </div>
+</footer>
+
+<script>
+
+// ==================== AUDIO ====================
+let isPlaying = false;
+function toggleAudio() {
+    const audio = document.getElementById("bgAudio");
+    const wave = document.getElementById("audioWave");
+    if (isPlaying) { audio.pause(); wave.style.display = "none"; }
+    else { audio.play().catch(function(e){console.log("Audio play failed")}); wave.style.display = "flex"; }
+    isPlaying = !isPlaying;
+}
+
+// ==================== SCROLL REVEAL ====================
+const reveals = document.querySelectorAll(".reveal");
+const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) { if (entry.isIntersecting) entry.target.classList.add("active"); });
+}, { threshold: 0.1 });
+reveals.forEach(function(el) { observer.observe(el); });
+
+// ==================== CH1: BAR ANIMATION ====================
+const bars = document.querySelectorAll(".bar-fill[data-width]");
+const barObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+            const bar = entry.target;
+            bar.style.width = bar.getAttribute("data-width");
+            barObserver.unobserve(bar);
+        }
+    });
+}, { threshold: 0.5 });
+bars.forEach(function(bar) { barObserver.observe(bar); });
+
+function toggleFundPopup() { document.getElementById("fundPopup").classList.toggle("active"); }
+
+// ==================== CH2: 左图 - 游子思乡水袖滑轨 ====================
+const leftData = {
+    elderly: { pct: 100, quote: "我们孩童的时候大概四五岁，黄梅戏还是黄梅调，父辈劳作后没事就哼哼黄梅小调，《天仙配》《女驸马》《闹花灯》都是会哼唱的。", author: "戏迷严爷爷 · 老年群体" },
+    middle: { pct: 40, quote: "40%的中年受访者在离乡后思念戏曲氛围。黄梅戏是安庆游子独有的乡愁，无论走到哪里，一提起家乡，最先想到的就是黄梅戏的锣鼓声。", author: "离乡游子 · 中年群体" },
+    youth: { pct: 20, quote: "20%的青年游子非常想念家乡戏曲氛围。即便对黄梅戏喜爱程度最低的青年群体，也有这份深沉的乡愁埋在心底。", author: "青年游子 · 离乡思念数据" }
+};
+
+let draggedLeft = null;
+let dragStartX = 0;
+let dragStartLeft = 0;
+
+function initLeftScales() {
+    ['elderly', 'middle', 'youth'].forEach(group => {
+        const scaleEl = document.getElementById('scale-left-' + group);
+        scaleEl.innerHTML = '';
+        for (let i = 0; i <= 100; i += 10) {
+            const line = document.createElement('div');
+            line.className = 'scale-line' + (i % 20 === 0 ? ' major' : '') + (i % 10 === 0 ? ' snap' : '');
+            line.style.left = i + '%';
+            if (i % 20 === 0) line.setAttribute('data-label', i + '%');
+            scaleEl.appendChild(line);
+        }
+    });
+}
+
+function setLeftCursor(group, pct, animate) {
+    const rail = document.getElementById('rail-left-' + group);
+    const fill = document.getElementById('fill-left-' + group);
+    const cursor = document.getElementById('cursor-left-' + group);
+    const valueEl = document.getElementById('value-left-' + group);
+
+    const snapped = Math.round(pct / 10) * 10;
+    const clamped = Math.max(0, Math.min(100, snapped));
+
+    if (animate) {
+        fill.style.transition = 'width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        cursor.style.transition = 'left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+    } else {
+        fill.style.transition = 'none';
+        cursor.style.transition = 'none';
+    }
+
+    fill.style.width = clamped + '%';
+    cursor.style.left = clamped + '%';
+    valueEl.textContent = clamped + '%';
+
+    setTimeout(() => {
+        fill.style.transition = 'width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        cursor.style.transition = 'left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+    }, 50);
+}
+
+function initLeftDrag() {
+    ['elderly', 'middle', 'youth'].forEach(group => {
+        const cursor = document.getElementById('cursor-left-' + group);
+
+        cursor.addEventListener('mousedown', (e) => startLeftDrag(e, group));
+        cursor.addEventListener('touchstart', (e) => startLeftDrag(e, group), { passive: false });
+
+        cursor.addEventListener('mouseenter', (e) => showLeftQuote(e, group));
+        cursor.addEventListener('mouseleave', hideLeftQuote);
+    });
+
+    document.addEventListener('mousemove', onLeftDrag);
+    document.addEventListener('mouseup', endLeftDrag);
+    document.addEventListener('touchmove', onLeftDrag, { passive: false });
+    document.addEventListener('touchend', endLeftDrag);
+}
+
+function startLeftDrag(e, group) {
+    e.preventDefault();
+    draggedLeft = group;
+    const cursor = document.getElementById('cursor-left-' + group);
+    cursor.classList.add('dragging');
+
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    dragStartX = clientX;
+    dragStartLeft = parseFloat(cursor.style.left) || 0;
+}
+
+function onLeftDrag(e) {
+    if (!draggedLeft) return;
+    e.preventDefault();
+
+    const rail = document.getElementById('rail-left-' + draggedLeft);
+    const rect = rail.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+
+    let pct = ((clientX - rect.left) / rect.width) * 100;
+    setLeftCursor(draggedLeft, pct, false);
+}
+
+function endLeftDrag() {
+    if (!draggedLeft) return;
+    const cursor = document.getElementById('cursor-left-' + draggedLeft);
+    cursor.classList.remove('dragging');
+    draggedLeft = null;
+}
+
+function showLeftQuote(e, group) {
+    const data = leftData[group];
+    const bubble = document.getElementById('quoteBubble');
+
+    document.getElementById('bubbleText').textContent = '"' + data.quote + '"';
+    document.getElementById('bubbleAuthor').textContent = '—— ' + data.author;
+
+    const rect = e.target.getBoundingClientRect();
+    bubble.style.left = (rect.left + rect.width / 2 - 150) + 'px';
+    bubble.style.top = (rect.top - 110) + 'px';
+    bubble.classList.add('show');
+}
+
+function hideLeftQuote() {
+    document.getElementById('quoteBubble').classList.remove('show');
+}
+
+function lockLeftTo97() {
+    const btn = document.getElementById('leftPromoteBtn');
+    btn.classList.toggle('active');
+
+    if (btn.classList.contains('active')) {
+        // 锁定状态：所有游标都到100%（统一高值）
+        ['elderly', 'middle', 'youth'].forEach((group, i) => {
+            setTimeout(() => {
+                setLeftCursor(group, 100, true);
+            }, i * 150);
+        });
+        btn.textContent = '🔓 解锁 · 恢复思乡数据';
+    } else {
+        // 解锁状态：恢复到各年龄层真实思乡数据
+        ['elderly', 'middle', 'youth'].forEach((group, i) => {
+            setTimeout(() => {
+                setLeftCursor(group, leftData[group].pct, true);
+            }, i * 150);
+        });
+        btn.textContent = '🔒 游子思乡 · 水袖刻度';
+    }
+}
+
+// ==================== CH2: 右图 - 市民认同戏台卡片 ====================
+const rightData = {
+    free: {
+        elderly: { pct: 84, label: "支持乡村免费搭台", quote: "老年群体100%支持乡村社区免费搭台唱戏。戏台是城市的灵魂，锣鼓一响，人就聚起来了。", author: "老年戏迷 · 免费搭台支持率", extra: [{num:"100%",label:"喜爱黄梅戏"},{num:"100%",label:"认定城市符号"},{num:"84%",label:"支持免费戏台"},{num:"97%",label:"游子推介率"}] },
+        middle: { pct: 85, label: "认为民间戏台代表烟火", quote: "85%的人认为民间戏台代表安庆烟火底色。戏台子一搭，人山人海，这就是安庆最真实的烟火气。", author: "中年市民 · 烟火底色认同", extra: [{num:"85%",label:"烟火底色"},{num:"84%",label:"支持免费戏台"},{num:"97%",label:"游子推介"},{num:"60%",label:"戏台增收"}] },
+        youth: { pct: 28, label: "支持免费搭台唱戏", quote: "28%的青年表示非常支持免费搭台唱戏的做法。即便很少看戏，但他们认可戏台对城市的意义。", author: "青年群体 · 戏台态度数据", extra: [{num:"28%",label:"支持免费"},{num:"30%",label:"认可招牌"},{num:"20%",label:"想念戏曲"},{num:"17%",label:"认为过时"}] }
+    },
+    symbol: {
+        elderly: { pct: 100, label: "认定黄梅戏是城市名片", quote: "老年群体一致认定黄梅戏是安庆独有的城市符号。戏台是城市的灵魂，锣鼓一响，人就聚起来了。", author: "老年群体 · 一致认同", extra: [{num:"100%",label:"认定名片"},{num:"100%",label:"支持戏台"},{num:"91%",label:"城市符号"},{num:"85%",label:"烟火底色"}] },
+        middle: { pct: 97, label: "游子对外推介必提黄梅戏", quote: "97%的受访者在外介绍家乡时都会提起黄梅戏。无论看不看戏，安庆人都把黄梅戏当做家乡的专属烙印。", author: "中年游子 · 推介数据", extra: [{num:"97%",label:"推介黄梅戏"},{num:"85%",label:"烟火底色"},{num:"84%",label:"支持戏台"},{num:"60%",label:"戏台增收"}] },
+        youth: { pct: 30, label: "几乎不看戏但仍认招牌", quote: "30%的青年几乎不看戏，但依旧认可黄梅戏是安庆的招牌。这是一种矛盾而深沉的文化认同——不看，但知道它是我们的根。", author: "青年群体 · 矛盾心理数据", extra: [{num:"30%",label:"认可招牌"},{num:"28%",label:"支持免费"},{num:"20%",label:"想念戏曲"},{num:"17%",label:"认为过时"}] }
+    }
+};
+
+let currentRightMode = 'free';
+
+function switchRightMode(mode) {
+    currentRightMode = mode;
+
+    document.getElementById('tab-free').classList.toggle('active', mode === 'free');
+    document.getElementById('tab-symbol').classList.toggle('active', mode === 'symbol');
+
+    const data = rightData[mode];
+
+    ['elderly', 'middle', 'youth'].forEach(group => {
+        const gData = data[group];
+        document.getElementById('pct-right-' + group).textContent = gData.pct + '%';
+        document.getElementById('label-right-' + group).textContent = gData.label;
+
+        const progress = document.getElementById('progress-right-' + group);
+        progress.style.width = '0%';
+        setTimeout(() => {
+            progress.style.width = gData.pct + '%';
+        }, 100);
+    });
+}
+
+function openCardModal(group) {
+    const data = rightData[currentRightMode][group];
+    const header = document.getElementById('cardModalHeader');
+
+    header.className = 'card-modal-header ' + group;
+    document.getElementById('cardModalTitle').textContent = group === 'elderly' ? '老年层' : group === 'middle' ? '中年层' : '青年层';
+    document.getElementById('cardModalPct').textContent = data.pct + '%';
+    document.getElementById('cardModalLabel').textContent = data.label;
+    document.getElementById('cardModalQuote').textContent = '"' + data.quote + '"';
+    document.getElementById('cardModalAuthor').textContent = '—— ' + data.author;
+
+    const extraGrid = document.getElementById('cardModalExtra');
+    extraGrid.innerHTML = '';
+    data.extra.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'card-modal-extra-item';
+        div.innerHTML = '<div class="extra-num">' + item.num + '</div><div class="extra-label">' + item.label + '</div>';
+        extraGrid.appendChild(div);
+    });
+
+    document.getElementById('cardModalOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCardModal(e) {
+    if (e && e.target !== document.getElementById('cardModalOverlay')) return;
+    document.getElementById('cardModalOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeCardModal();
+});
+
+// ==================== 一键对比 ====================
+function syncDualViz() {
+    // 左图切换到97%参考线
+    const leftBtn = document.getElementById('leftPromoteBtn');
+    if (!leftBtn.classList.contains('active')) {
+        lockLeftTo97();
+    }
+
+    // 右图切换到"认可城市符号"模式
+    if (currentRightMode !== 'symbol') {
+        switchRightMode('symbol');
+    }
+}
+
+// ==================== CH3: 双雷达图并排（传统困境 vs 创新解法）====================
+const radarCanvasPain = document.getElementById("radarCanvasPain");
+const radarCtxPain = radarCanvasPain.getContext("2d");
+const radarCanvasInnov = document.getElementById("radarCanvasInnov");
+const radarCtxInnov = radarCanvasInnov.getContext("2d");
+
+let currentAgeGroup = "all";
+
+// 4维度数据
+const radarData = {
+    all: {
+        pain: [33, 34, 38, 17],      // 节奏慢, 碎片化, 戏台减少, 认为过时
+        innov: [72.5, 50, 28, 68]     // 短视频改编, 惠民戏台, 文创创业, 老年普及
+    },
+    youth: {
+        pain: [45, 55, 20, 30],
+        innov: [85, 40, 35, 15]
+    },
+    middle: {
+        pain: [30, 25, 45, 15],
+        innov: [60, 55, 25, 50]
+    },
+    elderly: {
+        pain: [15, 10, 55, 5],
+        innov: [40, 65, 10, 85]
+    }
+};
+
+const painLabels = ["节奏慢", "碎片化", "戏台减少", "认为过时"];
+const innovLabels = ["短视频改编", "惠民戏台", "文创创业", "老年普及"];
+
+const painTooltips = {
+    "节奏慢": "33%青年认为传统黄梅戏剧情节奏缓慢、冗长拖沓",
+    "碎片化": "34%青年日常娱乐依赖碎片化短视频，无完整时间观看整本戏曲",
+    "戏台减少": "38%中老年受众反馈本土民间露天戏台逐年缩减",
+    "认为过时": "17%青年人觉得黄梅戏已经过时"
+};
+
+const innovTooltips = {
+    "短视频改编": "72.5%青年认可短视频轻量化改编形式",
+    "惠民戏台": "政府落地「四季有戏」免费惠民戏台，群众整体支持率50%",
+    "文创创业": "28%青年愿意入局黄梅戏周边文创、数字戏曲相关创业赛道",
+    "老年普及": "68%老年戏迷会主动向晚辈普及黄梅戏经典选段"
+};
+
+// 节点位置缓存
+let painNodePositions = [];
+let innovNodePositions = [];
+
+// 三档解决方案数据
+const solutionData = {
+    pain: {
+        icon: "&#128308;",
+        title: "困境溯源 + 基础补救方案",
+        summary: "线下观戏阵地消亡、青年受众审美断层、传统戏曲传播模式与当下娱乐生态完全脱节。",
+        items: [
+            { num: "①", title: "保留存量民间戏台", desc: "划定社区固定戏曲展演空间，守住线下观戏最后阵地" },
+            { num: "②", title: "精简传统大戏时长", desc: "推出10分钟内精简版经典折子戏，适配大众基础观看习惯" }
+        ]
+    },
+    balance: {
+        icon: "&#9878;",
+        title: "平衡优化方案",
+        summary: "传统传承有人坚守（老年自发普及68%），年轻化创新有人尝试，但供需匹配度不足，惠民戏台支持率仅50%，青年创业意愿偏低，创新转化率不足。",
+        items: [
+            { num: "①", title: "老戏迷入驻惠民戏台", desc: "联动老年戏迷团队入驻城市惠民戏台，实现老戏迷传戏+公共戏台阵地双向结合" },
+            { num: "②", title: "线下戏台同步直播", desc: "打通线下实景观戏+线上碎片化观看双渠道，扩大受众覆盖面" }
+        ]
+    },
+    innov: {
+        icon: "&#128994;",
+        title: "全方位年轻化创新落地解决方案",
+        summary: "短视频、文创、惠民戏台、老年普及四大创新数据全面放大，创新举措对冲传承困境效果显著。",
+        items: [
+            { num: "①", title: "线上短视频破圈", desc: "依托72.5%青年接受度，打造黄梅戏剧情短视频、戏腔翻唱、戏曲变装三大内容赛道" },
+            { num: "②", title: "线下城市阵地扩容", desc: "持续扩容「四季有戏」免费戏台，根据中老年需求定点加开场次" },
+            { num: "③", title: "青年创业扶持", desc: "政府联合文旅平台开设黄梅戏文创孵化项目，推动戏曲IP周边、数字藏品、戏曲盲盒落地" }
+        ]
+    }
+};
+
+// 人群备注文案
+const ageNotes = {
+    all: "全部人群视角：传统传承困境与城市创新赋能双向博弈",
+    youth: "青年核心矛盾：观戏习惯脱节，但年轻化改编接受度极高",
+    middle: "中年核心矛盾：线下观戏阵地缺失，公共惠民戏台供需匹配不足",
+    elderly: "老年核心诉求：守住线下戏曲原生场景，延续传统戏曲口口相传模式"
+};
+
+// ========== 绘制左图：传统困境雷达图 ==========
+function drawPainRadar() {
+    const canvas = radarCanvasPain;
+    const ctx = radarCtxPain;
+    const w = canvas.width, h = canvas.height;
+    const cx = w / 2, cy = h / 2 + 5;
+    const radius = 100;
+    const sides = 4;
+    ctx.clearRect(0, 0, w, h);
+    painNodePositions = [];
+
+    const data = radarData[currentAgeGroup].pain;
+
+    // 绘制网格
+    ctx.strokeStyle = "#e8e0d0"; ctx.lineWidth = 1;
+    for (let r = 1; r <= 5; r++) {
+        ctx.beginPath();
+        for (let i = 0; i <= sides; i++) {
+            const angle = (Math.PI * 2 / sides) * i - Math.PI / 2;
+            const x = cx + Math.cos(angle) * (radius * r / 5);
+            const y = cy + Math.sin(angle) * (radius * r / 5);
+            if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.closePath(); ctx.stroke();
+    }
+
+    // 轴线 + 标签
+    ctx.font = "bold 12px Noto Sans SC, sans-serif";
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    for (let i = 0; i < sides; i++) {
+        const angle = (Math.PI * 2 / sides) * i - Math.PI / 2;
+        ctx.beginPath(); ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + Math.cos(angle) * radius, cy + Math.sin(angle) * radius);
+        ctx.strokeStyle = "#e8e0d0"; ctx.stroke();
+
+        const labelX = cx + Math.cos(angle) * (radius + 22);
+        const labelY = cy + Math.sin(angle) * (radius + 22);
+        ctx.fillStyle = "#C62828";
+        ctx.fillText(painLabels[i], labelX, labelY);
+    }
+
+    // 绘制数据区域
+    ctx.beginPath();
+    ctx.fillStyle = "rgba(198,40,40,0.18)";
+    ctx.strokeStyle = "rgba(198,40,40,0.85)";
+    ctx.lineWidth = 2.5;
+    for (let i = 0; i <= sides; i++) {
+        const idx = i % sides;
+        const angle = (Math.PI * 2 / sides) * idx - Math.PI / 2;
+        const val = data[idx] / 100;
+        const x = cx + Math.cos(angle) * radius * val;
+        const y = cy + Math.sin(angle) * radius * val;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+
+    // 绘制节点
+    for (let i = 0; i < sides; i++) {
+        const angle = (Math.PI * 2 / sides) * i - Math.PI / 2;
+        const val = data[i] / 100;
+        const x = cx + Math.cos(angle) * radius * val;
+        const y = cy + Math.sin(angle) * radius * val;
+
+        ctx.beginPath(); ctx.arc(x, y, 8, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(198,40,40,0.12)"; ctx.fill();
+
+        ctx.beginPath(); ctx.arc(x, y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = "#C62828"; ctx.fill();
+        ctx.strokeStyle = "#fff"; ctx.lineWidth = 2; ctx.stroke();
+
+        ctx.font = "bold 11px Noto Sans SC";
+        ctx.fillStyle = "#C62828";
+        const textX = cx + Math.cos(angle) * (radius * val + 16);
+        const textY = cy + Math.sin(angle) * (radius * val + 16);
+        ctx.fillText(data[i] + "%", textX, textY);
+
+        painNodePositions.push({
+            x: x, y: y, r: 10,
+            label: painLabels[i], value: data[i],
+            tooltip: painTooltips[painLabels[i]]
+        });
+    }
+
+    ctx.beginPath(); ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(198,40,40,0.3)"; ctx.fill();
+}
+
+// ========== 绘制右图：创新解法雷达图 ==========
+function drawInnovRadar() {
+    const canvas = radarCanvasInnov;
+    const ctx = radarCtxInnov;
+    const w = canvas.width, h = canvas.height;
+    const cx = w / 2, cy = h / 2 + 5;
+    const radius = 100;
+    const sides = 4;
+    ctx.clearRect(0, 0, w, h);
+    innovNodePositions = [];
+
+    const data = radarData[currentAgeGroup].innov;
+
+    // 绘制网格
+    ctx.strokeStyle = "#e8e0d0"; ctx.lineWidth = 1;
+    for (let r = 1; r <= 5; r++) {
+        ctx.beginPath();
+        for (let i = 0; i <= sides; i++) {
+            const angle = (Math.PI * 2 / sides) * i - Math.PI / 2;
+            const x = cx + Math.cos(angle) * (radius * r / 5);
+            const y = cy + Math.sin(angle) * (radius * r / 5);
+            if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.closePath(); ctx.stroke();
+    }
+
+    // 轴线 + 标签
+    ctx.font = "bold 12px Noto Sans SC, sans-serif";
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    for (let i = 0; i < sides; i++) {
+        const angle = (Math.PI * 2 / sides) * i - Math.PI / 2;
+        ctx.beginPath(); ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + Math.cos(angle) * radius, cy + Math.sin(angle) * radius);
+        ctx.strokeStyle = "#e8e0d0"; ctx.stroke();
+
+        const labelX = cx + Math.cos(angle) * (radius + 22);
+        const labelY = cy + Math.sin(angle) * (radius + 22);
+        ctx.fillStyle = "#2E8B8B";
+        ctx.fillText(innovLabels[i], labelX, labelY);
+    }
+
+    // 绘制数据区域
+    ctx.beginPath();
+    ctx.fillStyle = "rgba(46,139,139,0.18)";
+    ctx.strokeStyle = "rgba(46,139,139,0.85)";
+    ctx.lineWidth = 2.5;
+    for (let i = 0; i <= sides; i++) {
+        const idx = i % sides;
+        const angle = (Math.PI * 2 / sides) * idx - Math.PI / 2;
+        const val = data[idx] / 100;
+        const x = cx + Math.cos(angle) * radius * val;
+        const y = cy + Math.sin(angle) * radius * val;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+
+    // 绘制节点
+    for (let i = 0; i < sides; i++) {
+        const angle = (Math.PI * 2 / sides) * i - Math.PI / 2;
+        const val = data[i] / 100;
+        const x = cx + Math.cos(angle) * radius * val;
+        const y = cy + Math.sin(angle) * radius * val;
+
+        ctx.beginPath(); ctx.arc(x, y, 8, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(46,139,139,0.12)"; ctx.fill();
+
+        ctx.beginPath(); ctx.arc(x, y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = "#2E8B8B"; ctx.fill();
+        ctx.strokeStyle = "#fff"; ctx.lineWidth = 2; ctx.stroke();
+
+        ctx.font = "bold 11px Noto Sans SC";
+        ctx.fillStyle = "#2E8B8B";
+        const textX = cx + Math.cos(angle) * (radius * val + 16);
+        const textY = cy + Math.sin(angle) * (radius * val + 16);
+        ctx.fillText(data[i] + "%", textX, textY);
+
+        innovNodePositions.push({
+            x: x, y: y, r: 10,
+            label: innovLabels[i], value: data[i],
+            tooltip: innovTooltips[innovLabels[i]]
+        });
+    }
+
+    ctx.beginPath(); ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(46,139,139,0.3)"; ctx.fill();
+}
+
+// 同时绘制两个图
+function drawDualRadar() {
+    drawPainRadar();
+    drawInnovRadar();
+}
+
+// ========== 人群筛选 ==========
+function setAgeGroup(group, btn) {
+    currentAgeGroup = group;
+    document.querySelectorAll(".age-filter button").forEach(function(b) { b.classList.remove("active"); });
+    btn.classList.add("active");
+    document.getElementById('ageNote').textContent = ageNotes[group];
+    drawDualRadar();
+}
+
+// ========== 左图 Tooltip ==========
+radarCanvasPain.addEventListener('mousemove', function(e) {
+    const rect = radarCanvasPain.getBoundingClientRect();
+    const mx = (e.clientX - rect.left) * (radarCanvasPain.width / rect.width);
+    const my = (e.clientY - rect.top) * (radarCanvasPain.height / rect.height);
+
+    let hovered = null;
+    for (const node of painNodePositions) {
+        const dx = mx - node.x; const dy = my - node.y;
+        if (dx * dx + dy * dy <= node.r * node.r) { hovered = node; break; }
+    }
+
+    const tooltip = document.getElementById('radarTooltip');
+    if (hovered) {
+        tooltip.innerHTML = '<strong style="color:#E57373">' + hovered.label + ' ' + hovered.value + '%</strong><br><span style="font-size:0.75rem;opacity:0.8;">' + hovered.tooltip + '</span>';
+        tooltip.style.left = (e.clientX + 10) + 'px';
+        tooltip.style.top = (e.clientY - 50) + 'px';
+        tooltip.classList.add('show');
+        radarCanvasPain.style.cursor = 'pointer';
+    } else {
+        tooltip.classList.remove('show');
+        radarCanvasPain.style.cursor = 'default';
+    }
+});
+
+radarCanvasPain.addEventListener('mouseleave', function() {
+    document.getElementById('radarTooltip').classList.remove('show');
+});
+
+// ========== 右图 Tooltip + 彩蛋触发 ==========
+radarCanvasInnov.addEventListener('mousemove', function(e) {
+    const rect = radarCanvasInnov.getBoundingClientRect();
+    const mx = (e.clientX - rect.left) * (radarCanvasInnov.width / rect.width);
+    const my = (e.clientY - rect.top) * (radarCanvasInnov.height / rect.height);
+
+    let hovered = null;
+    for (const node of innovNodePositions) {
+        const dx = mx - node.x; const dy = my - node.y;
+        if (dx * dx + dy * dy <= node.r * node.r) { hovered = node; break; }
+    }
+
+    const tooltip = document.getElementById('radarTooltip');
+    if (hovered) {
+        tooltip.innerHTML = '<strong style="color:#80CBC4">' + hovered.label + ' ' + hovered.value + '%</strong><br><span style="font-size:0.75rem;opacity:0.8;">' + hovered.tooltip + '</span>';
+        tooltip.style.left = (e.clientX + 10) + 'px';
+        tooltip.style.top = (e.clientY - 50) + 'px';
+        tooltip.classList.add('show');
+        radarCanvasInnov.style.cursor = 'pointer';
+    } else {
+        tooltip.classList.remove('show');
+        radarCanvasInnov.style.cursor = 'default';
+    }
+});
+
+radarCanvasInnov.addEventListener('mouseleave', function() {
+    document.getElementById('radarTooltip').classList.remove('show');
+});
+
+// 点击文创创业节点触发彩蛋
+radarCanvasInnov.addEventListener('click', function(e) {
+    const rect = radarCanvasInnov.getBoundingClientRect();
+    const mx = (e.clientX - rect.left) * (radarCanvasInnov.width / rect.width);
+    const my = (e.clientY - rect.top) * (radarCanvasInnov.height / rect.height);
+
+    for (const node of innovNodePositions) {
+        const dx = mx - node.x; const dy = my - node.y;
+        if (dx * dx + dy * dy <= node.r * node.r) {
+            if (node.label === "文创创业") {
+                triggerInnovEaster(node, rect, e);
+            }
+            break;
+        }
+    }
+});
+
+function triggerInnovEaster(node, rect, e) {
+    const flashEl = document.createElement('div');
+    flashEl.style.cssText = 'position:fixed;left:' + (e.clientX - 15) + 'px;top:' + (e.clientY - 15) + 'px;width:30px;height:30px;border-radius:50%;background:rgba(46,139,139,0.4);pointer-events:none;z-index:9999;animation:nodeFlash 0.6s ease-in-out 2;';
+    document.body.appendChild(flashEl);
+    setTimeout(() => flashEl.remove(), 1200);
+
+    document.getElementById('innovEasterOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeInnovEaster(e) {
+    if (e && e.target !== document.getElementById('innovEasterOverlay')) return;
+    document.getElementById('innovEasterOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// ========== 解决方案弹窗（默认显示平衡方案）==========
+function showSolutionPopup(type) {
+    const data = solutionData[type];
+    const popup = document.getElementById('solutionPopup');
+
+    document.getElementById('solutionIcon').innerHTML = data.icon;
+    document.getElementById('solutionTitle').textContent = data.title;
+    document.getElementById('solutionSummary').textContent = data.summary;
+
+    const itemsContainer = document.getElementById('solutionItems');
+    itemsContainer.innerHTML = '';
+    data.items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'solution-item';
+        div.innerHTML = '<div class="solution-item-num">' + item.num + '</div>' +
+            '<div class="solution-item-content">' +
+            '<div class="solution-item-title">' + item.title + '</div>' +
+            '<div class="solution-item-desc">' + item.desc + '</div>' +
+            '</div>';
+        itemsContainer.appendChild(div);
+    });
+
+    popup.classList.add('active');
+}
+
+function closeSolutionPopup() {
+    document.getElementById('solutionPopup').classList.remove('active');
+}
+
+// ========== 三档切换按钮（替代滑块）==========
+function showPainSolution() {
+    showSolutionPopup('pain');
+}
+function showBalanceSolution() {
+    showSolutionPopup('balance');
+}
+function showInnovSolution() {
+    showSolutionPopup('innov');
+}
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeInnovEaster();
+        closeSolutionPopup();
+    }
+});
+
+// 初始化
+drawDualRadar();
+setTimeout(function() {
+    showSolutionPopup('balance');
+}, 800);
+
+// ==================== CH4: FUSION PARTICLES ====================
+const fCanvas = document.getElementById("fusionCanvas");
+const fCtx = fCanvas.getContext("2d");
+
+let fParticles = [];
+let fIsDragging = false;
+let fDividerX = fCanvas.width * 0.35;
+let fFusionLevel = 0;
+
+class FParticle {
+    constructor(side) {
+        this.side = side;
+        this.baseX = side === "opera" ? 30 + Math.random() * (fCanvas.width * 0.35) : fCanvas.width * 0.65 + Math.random() * (fCanvas.width * 0.35 - 30);
+        this.x = this.baseX;
+        this.y = 70 + Math.random() * (fCanvas.height - 140);
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.vy = (Math.random() - 0.5) * 0.4;
+        this.size = Math.random() * 5 + 3;
+        this.dim = Math.floor(Math.random() * 3);
+        this.baseAlpha = Math.random() * 0.3 + 0.5;
+        this.alpha = this.baseAlpha;
+        this.pulsePhase = Math.random() * Math.PI * 2;
+        this.orbitAngle = Math.random() * Math.PI * 2;
+        this.orbitRadius = Math.random() * 30 + 10;
+        this.orbitSpeed = (Math.random() - 0.5) * 0.02;
+    }
+    getColorStr() {
+        if (this.dim === 0) return "212,160,23";
+        if (this.dim === 1) return "198,40,40";
+        return "46,139,139";
+    }
+    update() {
+        this.pulsePhase += 0.03;
+        this.orbitAngle += this.orbitSpeed;
+        this.alpha = this.baseAlpha + Math.sin(this.pulsePhase) * 0.12;
+
+        const centerX = fCanvas.width / 2;
+        const centerY = fCanvas.height / 2;
+        const dividerDist = Math.abs(fDividerX - centerX);
+        fFusionLevel = Math.max(0, 1 - dividerDist / (centerX * 0.5));
+
+        if (fFusionLevel > 0.05) {
+            const attract = fFusionLevel * 0.025;
+            this.x += (centerX - this.x) * attract;
+            this.y += (centerY - this.y) * attract;
+            const dx = this.x - centerX;
+            const dy = this.y - centerY;
+            const cos = Math.cos(this.orbitSpeed * 3);
+            const sin = Math.sin(this.orbitSpeed * 3);
+            this.x = centerX + dx * cos - dy * sin;
+            this.y = centerY + dx * sin + dy * cos;
+        } else {
+            this.x += this.vx;
+            this.y += this.vy;
+            const leftBound = this.side === "opera" ? 30 : fDividerX + 20;
+            const rightBound = this.side === "opera" ? fDividerX - 20 : fCanvas.width - 30;
+            if (this.x < leftBound || this.x > rightBound) this.vx *= -1;
+            if (this.y < 60 || this.y > fCanvas.height - 60) this.vy *= -1;
+        }
+    }
+    draw() {
+        const c = this.getColorStr();
+        fCtx.beginPath();
+        fCtx.arc(this.x, this.y, this.size * 2.5, 0, Math.PI * 2);
+        fCtx.fillStyle = "rgba(" + c + "," + (this.alpha * 0.1) + ")";
+        fCtx.fill();
+        fCtx.beginPath();
+        fCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        fCtx.fillStyle = "rgba(" + c + "," + this.alpha + ")";
+        fCtx.fill();
+        fCtx.beginPath();
+        fCtx.arc(this.x - this.size * 0.3, this.y - this.size * 0.3, this.size * 0.3, 0, Math.PI * 2);
+        fCtx.fillStyle = "rgba(255,255,255," + (this.alpha * 0.4) + ")";
+        fCtx.fill();
+    }
+}
+
+for (let i = 0; i < 180; i++) {
+    fParticles.push(new FParticle(i < 90 ? "opera" : "city"));
+}
+
+function drawFusion() {
+    const grad = fCtx.createLinearGradient(0, 0, fCanvas.width, fCanvas.height);
+    grad.addColorStop(0, "#1a1a2e");
+    grad.addColorStop(0.5, "#16213e");
+    grad.addColorStop(1, "#0f3460");
+    fCtx.fillStyle = grad;
+    fCtx.fillRect(0, 0, fCanvas.width, fCanvas.height);
+
+    const centerX = fCanvas.width / 2;
+    const centerY = fCanvas.height / 2;
+
+    fCtx.font = "bold 18px Noto Serif SC, serif";
+    fCtx.textAlign = "center";
+    fCtx.fillStyle = "rgba(255,255,255," + (0.7 - fFusionLevel * 0.5) + ")";
+    fCtx.fillText("黄梅戏", centerX * 0.5, 35);
+    fCtx.font = "12px Noto Sans SC, sans-serif";
+    fCtx.fillStyle = "rgba(255,255,255," + (0.4 - fFusionLevel * 0.3) + ")";
+    fCtx.fillText("一台戏 · 百年传承", centerX * 0.5, 52);
+
+    fCtx.font = "bold 18px Noto Serif SC, serif";
+    fCtx.fillStyle = "rgba(255,255,255," + (0.7 - fFusionLevel * 0.5) + ")";
+    fCtx.fillText("安庆城", centerX * 1.5, 35);
+    fCtx.font = "12px Noto Sans SC, sans-serif";
+    fCtx.fillStyle = "rgba(255,255,255," + (0.4 - fFusionLevel * 0.3) + ")";
+    fCtx.fillText("一座城 · 千年底蕴", centerX * 1.5, 52);
+
+    fCtx.font = "11px Noto Sans SC, sans-serif";
+    fCtx.fillStyle = "rgba(212,160,23,0.8)";
+    fCtx.fillText("● 金色 = 经济增收", centerX * 0.2, fCanvas.height - 15);
+    fCtx.fillStyle = "rgba(198,40,40,0.8)";
+    fCtx.fillText("● 红色 = 情感乡愁", centerX, fCanvas.height - 15);
+    fCtx.fillStyle = "rgba(46,139,139,0.8)";
+    fCtx.fillText("● 青色 = 传承创新", centerX * 1.8, fCanvas.height - 15);
+
+    if (fFusionLevel > 0.15) {
+        for (let i = 0; i < fParticles.length; i++) {
+            for (let j = i + 1; j < fParticles.length; j++) {
+                const p1 = fParticles[i];
+                const p2 = fParticles[j];
+                if (p1.dim === p2.dim && p1.side !== p2.side) {
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 200 * fFusionLevel) {
+                        fCtx.beginPath();
+                        fCtx.moveTo(p1.x, p1.y);
+                        fCtx.lineTo(p2.x, p2.y);
+                        const c = p1.getColorStr();
+                        fCtx.strokeStyle = "rgba(" + c + "," + (fFusionLevel * 0.35) + ")";
+                        fCtx.lineWidth = 1.5;
+                        fCtx.stroke();
+                    }
+                }
+            }
+        }
+    }
+
+    fParticles.forEach(function(p) { p.update(); p.draw(); });
+
+    fCtx.beginPath();
+    fCtx.moveTo(fDividerX, 60);
+    fCtx.lineTo(fDividerX, fCanvas.height - 60);
+    fCtx.strokeStyle = "rgba(255,255,255," + (0.3 + fFusionLevel * 0.3) + ")";
+    fCtx.lineWidth = 3;
+    fCtx.setLineDash([8, 6]);
+    fCtx.stroke();
+    fCtx.setLineDash([]);
+
+    fCtx.beginPath();
+    fCtx.arc(fDividerX, centerY, 12, 0, Math.PI * 2);
+    fCtx.fillStyle = "rgba(212,160,23," + (0.8 - fFusionLevel * 0.4) + ")";
+    fCtx.fill();
+    fCtx.strokeStyle = "rgba(255,255,255,0.6)";
+    fCtx.lineWidth = 2;
+    fCtx.stroke();
+
+    if (fFusionLevel > 0.1) {
+        fCtx.font = "bold 14px Noto Sans SC, sans-serif";
+        fCtx.fillStyle = "rgba(212,160,23," + fFusionLevel + ")";
+        fCtx.textAlign = "center";
+        fCtx.fillText("融合度: " + Math.round(fFusionLevel * 100) + "%", centerX, centerY + 80);
+    }
+
+    if (fFusionLevel > 0.85) {
+        const glowRadius = 60 + Math.sin(Date.now() / 500) * 10;
+        const glowGrad = fCtx.createRadialGradient(centerX, centerY, 0, centerX, centerY, glowRadius * 2);
+        glowGrad.addColorStop(0, "rgba(212,160,23," + ((fFusionLevel - 0.85) * 2) + ")");
+        glowGrad.addColorStop(0.5, "rgba(198,40,40," + ((fFusionLevel - 0.85) * 1.2) + ")");
+        glowGrad.addColorStop(1, "rgba(46,139,139,0)");
+        fCtx.fillStyle = glowGrad;
+        fCtx.fillRect(centerX - glowRadius * 2, centerY - glowRadius * 2, glowRadius * 4, glowRadius * 4);
+
+        document.getElementById("fusionSlogan").classList.add("show");
+        document.getElementById("fusionDataPopup").classList.add("active");
+    } else {
+        document.getElementById("fusionSlogan").classList.remove("show");
+        document.getElementById("fusionDataPopup").classList.remove("active");
+    }
+
+    requestAnimationFrame(drawFusion);
+}
+
+fCanvas.addEventListener("mousedown", function(e) {
+    const rect = fCanvas.getBoundingClientRect();
+    const x = (e.clientX - rect.left) * (fCanvas.width / rect.width);
+    if (Math.abs(x - fDividerX) < 40) fIsDragging = true;
+});
+fCanvas.addEventListener("mousemove", function(e) {
+    if (!fIsDragging) return;
+    const rect = fCanvas.getBoundingClientRect();
+    const x = (e.clientX - rect.left) * (fCanvas.width / rect.width);
+    fDividerX = Math.max(80, Math.min(fCanvas.width - 80, x));
+});
+fCanvas.addEventListener("mouseup", function() { fIsDragging = false; });
+fCanvas.addEventListener("mouseleave", function() { fIsDragging = false; });
+
+fCanvas.addEventListener("touchstart", function(e) {
+    const rect = fCanvas.getBoundingClientRect();
+    const x = (e.touches[0].clientX - rect.left) * (fCanvas.width / rect.width);
+    if (Math.abs(x - fDividerX) < 40) fIsDragging = true;
+});
+fCanvas.addEventListener("touchmove", function(e) {
+    if (!fIsDragging) return;
+    e.preventDefault();
+    const rect = fCanvas.getBoundingClientRect();
+    const x = (e.touches[0].clientX - rect.left) * (fCanvas.width / rect.width);
+    fDividerX = Math.max(80, Math.min(fCanvas.width - 80, x));
+});
+fCanvas.addEventListener("touchend", function() { fIsDragging = false; });
+
+// ==================== 初始化 ====================
+initLeftScales();
+initLeftDrag();
+
+setTimeout(() => {
+    // 初始锁定状态：所有游标都在100%
+    ['elderly', 'middle', 'youth'].forEach((group, i) => {
+        setTimeout(() => {
+            setLeftCursor(group, 100, true);
+        }, i * 200);
+    });
+}, 300);
+
+setTimeout(() => {
+    switchRightMode('free');
+}, 500);
+
+// ==================== NAVIGATION ====================
+function toggleNav() {
+    const toggle = document.querySelector('.nav-toggle');
+    const overlay = document.querySelector('.nav-mobile-overlay');
+    toggle.classList.toggle('active');
+    overlay.classList.toggle('active');
+}
+
+// Scroll spy for active nav link
+const navSections = ['ch1', 'ch2', 'ch3', 'ch4'];
+const navLinks = document.querySelectorAll('.nav-link');
+
+window.addEventListener('scroll', function() {
+    const nav = document.querySelector('.top-nav');
+    if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+    } else {
+        nav.classList.remove('scrolled');
+    }
+
+    let current = '';
+    navSections.forEach(function(id) {
+        const section = document.querySelector('.' + id);
+        if (section) {
+            const rect = section.getBoundingClientRect();
+            if (rect.top <= 100) {
+                current = id;
+            }
+        }
+    });
+
+    navLinks.forEach(function(link) {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+            link.classList.add('active');
+        }
+    });
+});
+
+// Smooth scroll for nav links
+document.querySelectorAll('.nav-link').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            const offset = 70;
+            const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+            window.scrollTo({ top: top, behavior: 'smooth' });
+        }
+        // Close mobile menu if open
+        document.querySelector('.nav-toggle').classList.remove('active');
+        const overlay = document.querySelector('.nav-mobile-overlay');
+        if (overlay) overlay.classList.remove('active');
+    });
+});
+
+// Close mobile menu on resize to desktop
+window.addEventListener('resize', function() {
+    if (window.innerWidth > 768) {
+        document.querySelector('.nav-toggle').classList.remove('active');
+        const overlay = document.querySelector('.nav-mobile-overlay');
+        if (overlay) overlay.classList.remove('active');
+    }
+});
+
+drawFusion();
+</script>
+
+<!-- Mobile Navigation Overlay -->
+<div class="nav-mobile-overlay">
+    <a href="#ch1" class="nav-link active">戏润民生，城托戏脉</a>
+    <a href="#ch2" class="nav-link">戏为乡愁，城以戏荣</a>
+    <a href="#ch3" class="nav-link">戏顺时变，城助戏火</a>
+    <a href="#ch4" class="nav-link">根叶相依，城与戏共生</a>
+</div>
+
+</body>
+</html>
